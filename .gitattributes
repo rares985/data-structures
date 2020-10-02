@@ -1,0 +1,10 @@
+# Enforce unix newlines
+*.c   text eol=lf
+*.cpp text eol=lf
+*.h   text eol=lf
+
+# Windows EOL for bat files
+*.bat text eol=crlf
+
+# Don't diff or textually merge source maps
+*.map binary
