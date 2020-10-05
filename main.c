@@ -5,25 +5,35 @@
 /* 3rd party includes */
 #include "single_linked_list.h"
 #include "double_linked_list.h"
+#include "stack.h"
+
+#include "log.h"
+#include "types.h"
 
 
 int main( void )
 {
-  double_linked_list_t *list = NULL;
-  
-  dll_create(&list);
+  stack_t *st = NULL;
+  int value = 30;
 
-  int value2 = 20;
-  int value1 = 10;
+  stack_create(&st);
 
-  dll_add_end(list, &value1, sizeof(value2));
+  stack_push(st, &value, sizeof(value));
+  value = 20;
+  stack_push(st, &value, sizeof(value));
+  value = 10;
+  stack_push(st, &value, sizeof(value));
 
-  dll_remove_end(list);
+  LOG_INF("Peeked value: %d", *(int*)stack_peek(st));
 
+  int popped_value = 500;
 
-  dll_print(list);
+  stack_pop(st, &popped_value, sizeof(int));
+  LOG_INF("Popped value: %d", popped_value);
 
-  dll_destroy(&list);
+  sll_print(st);
+
+  stack_destroy(&st);
 
   return 0;
 }
