@@ -4,8 +4,10 @@
 #include "single_linked_list_priv.h"
 #include "string.h"
 #include "log.h"
+#include "types.h"
 
 typedef sll_node_t node_t;
+
 
 static node_t *allocate_node(size_t data_size)
 {
@@ -26,11 +28,15 @@ static node_t *allocate_node(size_t data_size)
 	return elem;
 }
 
-void sll_create(single_linked_list_t **list)
+
+int sll_create(single_linked_list_t **list)
 {
+	int ret = ERR_OK;
+
 	if (!list)
 	{
 		LOG_ERR("Invalid input parameters!");
+		ret = ERR_INVALID_PARAMS;
 	}
 	else
 	{
@@ -38,22 +44,28 @@ void sll_create(single_linked_list_t **list)
 		if (NULL == *list)
 		{
 			LOG_ERR("Memory allocation failed!");
+			ret = ERR_NO_MEMORY;
 		}
 		else
 		{
 			(*list)->head = NULL;
 		}
 	}
+
+	return ret;
 }
 
-void sll_destroy(single_linked_list_t **list)
+
+int sll_destroy(single_linked_list_t **list)
 {
 	node_t *it = NULL;
 	node_t *temp = NULL;
+	int ret = ERR_OK;
 
 	if (NULL == list)
 	{
 		LOG_ERR("Null input parameter!");
+		ret = ERR_INVALID_PARAMS;
 	}
 	else if ((NULL == *list) || (NULL == (*list)->head))
 	{
@@ -73,17 +85,23 @@ void sll_destroy(single_linked_list_t **list)
 			free(temp);
 			temp = NULL;
 		}
+
+		free(*list);
+		*list = NULL;
 	}
-	free(*list);
-	*list = NULL;
+
+	return ret;
 }
 
 
-void sll_add_start(single_linked_list_t *list, void *data, size_t data_size)
+int sll_add_start(single_linked_list_t *list, void *data, size_t data_size)
 {
+	int ret = ERR_OK;
+
 	if (!list)
 	{
 		LOG_ERR("Null input parameter!");
+		ret = ERR_INVALID_PARAMS;
 	}
 	else
 	{
@@ -94,16 +112,25 @@ void sll_add_start(single_linked_list_t *list, void *data, size_t data_size)
 			elem->next = list->head;
 			list->head = elem;
 		}
+		else
+		{
+			ret = ERR_NO_MEMORY;
+			LOG_ERR("Failed to allocate memory for new node!");
+		}
 	}
+	return ret;
 }
 
-void sll_add_end(single_linked_list_t *list, void *data, size_t data_size)
+
+int sll_add_end(single_linked_list_t *list, void *data, size_t data_size)
 {
 	node_t *it = NULL;
+	int ret = ERR_OK;
 
 	if (!list)
 	{
 		LOG_ERR("Null input parameter!");
+		ret = ERR_INVALID_PARAMS;
 	}
 	else
 	{
@@ -121,19 +148,27 @@ void sll_add_end(single_linked_list_t *list, void *data, size_t data_size)
 
 			it->next = elem;
 		}
+		else
+		{
+			ret = ERR_NO_MEMORY;
+			LOG_ERR("Failed to allocate memory for new node!");
+		}
 	}
+	return ret;
 }
 
 
-void sll_add_pos(single_linked_list_t *list, void *data, size_t data_size, int pos)
+int sll_add_pos(single_linked_list_t *list, void *data, size_t data_size, int pos)
 {
 	int i = 0;
 	node_t *prev = NULL;
 	node_t *it = NULL;
+	int ret = ERR_OK;
 
 	if (!list)
 	{
 		LOG_ERR("Invalid input parameters!");
+		ret = ERR_INVALID_PARAMS;
 	}
 	else if (0 == pos)
 	{
@@ -163,18 +198,26 @@ void sll_add_pos(single_linked_list_t *list, void *data, size_t data_size, int p
 				elem->next = it;
 				prev->next = elem;
 			}
+			else
+			{
+				ret = ERR_NO_MEMORY;
+				LOG_ERR("Failed to allocate memory for new node!");
+			}
 		}
 	}
+	return ret;
 }
 
 
-void sll_remove_start(single_linked_list_t *list)
+int sll_remove_start(single_linked_list_t *list)
 {
 	node_t *temp = NULL;
+	int ret = ERR_OK;
 
 	if (!list)
 	{
 		LOG_ERR("Invalid input parameters!");
+		ret = ERR_INVALID_PARAMS;
 	}
 	else
 	{
@@ -187,16 +230,20 @@ void sll_remove_start(single_linked_list_t *list)
 		free(temp);
 		temp = NULL;
 	}
+	return ret;
 }
 
-void sll_remove_end(single_linked_list_t *list)
+
+int sll_remove_end(single_linked_list_t *list)
 {
 	node_t *prev = NULL;
 	node_t *it = NULL;
+	int ret = ERR_OK;
 
 	if (!list)
 	{
 		LOG_ERR("Invalid input parameters!");
+		ret = ERR_INVALID_PARAMS;
 	}
 	else
 	{
@@ -215,17 +262,25 @@ void sll_remove_end(single_linked_list_t *list)
 		free(it);
 		it = NULL;
 	}
+	return ret;
 }
 
-void sll_remove_pos(single_linked_list_t *list, int pos)
+
+int sll_remove_pos(single_linked_list_t *list, int pos)
 {
 	int i = 0;
 	node_t *it = NULL;
 	node_t *prev = NULL;
+	int ret = ERR_OK;
 
-	if ((NULL == list) || (NULL == list->head))
+	if (NULL == list)
 	{
-		LOG_ERR("List is empty!");
+		LOG_ERR("Invalid input parameters");
+		ret = ERR_INVALID_PARAMS;
+	}
+	else if (NULL == list->head)
+	{
+		LOG_INF("List is empty, can not remove from pos %d", pos);
 	}
 	else if (0 == pos)
 	{
@@ -259,6 +314,7 @@ void sll_remove_pos(single_linked_list_t *list, int pos)
 			it = NULL;
 		}
 	}
+	return ret;
 }
 
 

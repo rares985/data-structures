@@ -6,8 +6,6 @@
 #include "single_linked_list.h"
 #include "double_linked_list.h"
 
-#include "log.h"
-
 
 int main( void )
 {
