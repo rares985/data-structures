@@ -2,6 +2,7 @@
 #define TYPES_H_
 
 typedef enum {
+    ERR_STRUCTURE_FULL = -4,
     ERR_NO_MEMORY = -3,
     ERR_INVALID_PARAMS = -2,
     ERR_GENERIC = -1,

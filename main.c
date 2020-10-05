@@ -6,6 +6,7 @@
 #include "single_linked_list.h"
 #include "double_linked_list.h"
 #include "stack.h"
+#include "queue.h"
 
 #include "log.h"
 #include "types.h"
@@ -13,27 +14,27 @@
 
 int main( void )
 {
-  stack_t *st = NULL;
-  int value = 30;
+  queue_t *q = NULL;
+  int value = 10;
 
-  stack_create(&st);
+  queue_create(&q, 20);
 
-  stack_push(st, &value, sizeof(value));
+  queue_enqueue(q, &value, sizeof(value));
   value = 20;
-  stack_push(st, &value, sizeof(value));
-  value = 10;
-  stack_push(st, &value, sizeof(value));
+  queue_enqueue(q, &value, sizeof(value));
+  value = 30;
+  queue_enqueue(q, &value, sizeof(value));
 
-  LOG_INF("Peeked value: %d", *(int*)stack_peek(st));
+  int dequeued_value = 200;
+  queue_dequeue(q, &dequeued_value, sizeof(dequeued_value));
 
-  int popped_value = 500;
+  LOG_INF("Peeked value: %d", *(int*)queue_peek(q));
 
-  stack_pop(st, &popped_value, sizeof(int));
-  LOG_INF("Popped value: %d", popped_value);
+  queue_print(q);
+  LOG_INF("deqd value: %d", dequeued_value);
+  
 
-  sll_print(st);
-
-  stack_destroy(&st);
+  queue_destroy(&q);
 
   return 0;
 }
