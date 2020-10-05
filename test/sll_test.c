@@ -437,8 +437,6 @@ static int test_sll_remove_start(void)
 
     } while(0);
 }
-
-
 static int test_sll_remove_start_1(void)
 {
     int ret = ERR_OK;
