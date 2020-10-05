@@ -98,7 +98,7 @@ int sll_add_start(single_linked_list_t *list, void *data, size_t data_size)
 {
 	int ret = ERR_OK;
 
-	if (!list)
+	if (!list || !data)
 	{
 		LOG_ERR("Null input parameter!");
 		ret = ERR_INVALID_PARAMS;
@@ -127,10 +127,14 @@ int sll_add_end(single_linked_list_t *list, void *data, size_t data_size)
 	node_t *it = NULL;
 	int ret = ERR_OK;
 
-	if (!list)
+	if (!list || !data)
 	{
 		LOG_ERR("Null input parameter!");
 		ret = ERR_INVALID_PARAMS;
+	}
+	else if (!list->head)
+	{
+		ret = sll_add_start(list, data, data_size);
 	}
 	else
 	{
@@ -165,7 +169,7 @@ int sll_add_pos(single_linked_list_t *list, void *data, size_t data_size, int po
 	node_t *it = NULL;
 	int ret = ERR_OK;
 
-	if (!list)
+	if (!list || !data || pos < 0)
 	{
 		LOG_ERR("Invalid input parameters!");
 		ret = ERR_INVALID_PARAMS;
