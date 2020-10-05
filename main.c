@@ -7,6 +7,7 @@
 #include "double_linked_list.h"
 #include "stack.h"
 #include "queue.h"
+#include "hashtable.h"
 
 #include "log.h"
 #include "types.h"
@@ -14,27 +15,15 @@
 
 int main( void )
 {
-  queue_t *q = NULL;
-  int value = 10;
+  hashtable_t *ht = NULL;
 
-  queue_create(&q, 20);
+  // uint32_t value1 = 10;
 
-  queue_enqueue(q, &value, sizeof(value));
-  value = 20;
-  queue_enqueue(q, &value, sizeof(value));
-  value = 30;
-  queue_enqueue(q, &value, sizeof(value));
+  ht_create(&ht, 10);
 
-  int dequeued_value = 200;
-  queue_dequeue(q, &dequeued_value, sizeof(dequeued_value));
+  ht_print(ht);
 
-  LOG_INF("Peeked value: %d", *(int*)queue_peek(q));
-
-  queue_print(q);
-  LOG_INF("deqd value: %d", dequeued_value);
-  
-
-  queue_destroy(&q);
+  ht_destroy(&ht);
 
   return 0;
 }

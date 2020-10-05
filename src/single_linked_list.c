@@ -8,7 +8,6 @@
 
 typedef sll_node_t node_t;
 
-
 static node_t *allocate_node(size_t data_size)
 {
 	node_t *elem = NULL;
@@ -35,7 +34,7 @@ int sll_create(single_linked_list_t **list)
 
 	if (!list)
 	{
-		LOG_ERR("Invalid input parameters!");
+		LOG_ERR("%s: Invalid input parameters!", __FUNCTION__);
 		ret = ERR_INVALID_PARAMS;
 	}
 	else
@@ -64,12 +63,11 @@ int sll_destroy(single_linked_list_t **list)
 
 	if (NULL == list)
 	{
-		LOG_ERR("Null input parameter!");
 		ret = ERR_INVALID_PARAMS;
 	}
-	else if ((NULL == *list) || (NULL == (*list)->head))
+	else if (NULL == *list)
 	{
-		LOG_ERR("List already empty!");
+		ret = ERR_OK;
 	}
 	else
 	{
@@ -100,7 +98,7 @@ int sll_add_start(single_linked_list_t *list, void *data, size_t data_size)
 
 	if (!list || !data)
 	{
-		LOG_ERR("Null input parameter!");
+		LOG_ERR("%s: Null input parameter!", __FUNCTION__);
 		ret = ERR_INVALID_PARAMS;
 	}
 	else
@@ -129,7 +127,6 @@ int sll_add_end(single_linked_list_t *list, void *data, size_t data_size)
 
 	if (!list || !data)
 	{
-		LOG_ERR("Null input parameter!");
 		ret = ERR_INVALID_PARAMS;
 	}
 	else if (!list->head)
@@ -322,6 +319,34 @@ int sll_remove_pos(single_linked_list_t *list, int pos)
 }
 
 
+int sll_find(single_linked_list_t *list, void *data)
+{
+	int ret = ERR_OK;
+	int index_found = -1;
+	int i = 0;
+	node_t *it = NULL;
+
+	if (!list || !data)
+	{
+		ret = ERR_INVALID_PARAMS;
+	}
+	else
+	{
+		it = list->head;
+		while(it)
+		{
+			if (0 == memcmp(it->data, data, sizeof(*it->data)))
+			{
+				index_found = i;
+			}
+			it = it->next;
+			i += 1;
+		}
+	}
+	return (ret == ERR_OK ? index_found : ret);
+}
+
+
 int sll_length(single_linked_list_t *list)
 {
 	node_t *it = NULL;
@@ -350,11 +375,7 @@ void sll_print(single_linked_list_t *list)
 {
 	node_t *it = NULL;
 
-	if (!list)
-	{
-		LOG_ERR("Null input parameter!");
-	}
-	else
+	if (list)
 	{
 		it = list->head;
 		while (it)

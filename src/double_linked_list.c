@@ -60,14 +60,10 @@ int dll_destroy(double_linked_list_t **list)
 	node_t *temp = NULL;
 	int ret = ERR_OK;
 
-	if (NULL == list)
+	if (NULL == list || NULL == *list)
 	{
-		LOG_ERR("Null input parameter!");
-		ret = ERR_INVALID_PARAMS;
-	}
-	else if ((NULL == *list) || (NULL == (*list)->head))
-	{
-		LOG_ERR("List already empty!");
+		/* list is already empty */
+		ret = ERR_OK;
 	}
 	else
 	{

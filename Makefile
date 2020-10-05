@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -g
-CFLAGS=-Iinc -Ipublic
+CFLAGS+=-Iinc -Ipublic
 LDFLAGS=-ldata-structures -L/home/uidn4121/shared/personal/data-structures
 .DEFAULT_GOAL := main
 
@@ -18,7 +18,7 @@ main: main.c $(LIBNAME)
 
 
 $(LIBNAME): data-structures.o
-	$(CC) -shared -Wl,-soname,$(LIBNAME) *.o -o $@
+	$(CC) $(CFLAGS) -shared -Wl,-soname,$(LIBNAME) *.o -o $@
 
 data-structures.o: src/*.c
 	@echo "Creating the shared library..."

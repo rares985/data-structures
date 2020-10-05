@@ -9,4 +9,9 @@ typedef enum {
     ERR_OK = 0
 } error_t;
 
+typedef unsigned char   uint8_t;
+typedef unsigned short  uint16_t;
+typedef unsigned int    uint32_t;
+typedef unsigned long   uint64_t;
+
 #endif /* TYPES_H_ */

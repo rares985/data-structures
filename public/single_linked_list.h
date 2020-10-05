@@ -15,6 +15,7 @@ int sll_add_start(single_linked_list_t *list, void *data, size_t data_size);
 int sll_add_end(single_linked_list_t *list, void *data, size_t data_size);
 int sll_add_pos(single_linked_list_t *list, void *data, size_t data_size, int pos);
 int sll_remove_start(single_linked_list_t *list);
+int sll_find(single_linked_list_t *list, void *data);
 int sll_remove_end(single_linked_list_t *list);
 int sll_remove_pos(single_linked_list_t *list, int pos);
 int sll_length(single_linked_list_t *list);
