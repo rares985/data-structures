@@ -50,19 +50,7 @@ class Stack
         template <typename U>
         friend std::ostream& operator<< (std::ostream &out, const Stack<U> &st)
         {
-            out << "Stack(";
-            SingleLinkedListNode<U> *it = st.lst->head_;
-            while (it != nullptr)
-            {
-                out << *(it->data);
-                if (it->next != nullptr)
-                {
-                    out << "->";
-                }
-
-                it = it->next;
-            }
-            out << ")";
+            out << "Stack(" << *(st.lst) << ")";
             return out;
         }
 

@@ -53,21 +53,9 @@ class Queue
         }
 
         template <typename U>
-        friend std::ostream& operator<< (std::ostream &out, const Queue<U> &st)
+        friend std::ostream& operator<< (std::ostream &out, const Queue<U> &q)
         {
-            out << "Queue(";
-            SingleLinkedListNode<U> *it = st.lst->head_;
-            while (it != nullptr)
-            {
-                out << *(it->data);
-                if (it->next != nullptr)
-                {
-                    out << "->";
-                }
-
-                it = it->next;
-            }
-            out << ")";
+            out << "Queue(" << *(q.lst) << ")";
             return out;
         }
 };

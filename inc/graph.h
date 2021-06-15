@@ -1,7 +1,9 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-#include "single_linked_list.h"
+#include <queue.h>
+#include <stack.h>
+#include <vector>
 
 class Graph {
     private:
@@ -33,16 +35,98 @@ class Graph {
 
         void add_edge(int v1, int v2, int weight=1)
         {
-            adj_[v1][v2] = weight;
+            if (v1 < 1 || v2 < 1)
+            {
+                return;
+            }
+
+            adj_[v1 - 1][v2 - 1] = weight;
             if (!is_directed_)
             {
-                adj_[v2][v1] = weight;
+                adj_[v2 - 1][v1 - 1] = weight;
             }
         }
 
-        int is_edge(int v1, int v2)
+        bool is_edge(int v1, int v2)
         {
-            return adj_[v1][v2] != 0;
+            if (v1 < 1 || v2 < 1)
+            {
+                return false;
+            }
+            return adj_[v1 - 1][v2 - 1] != 0;
+        }
+
+        bool has_node(int v)
+        {
+            return ((v < vertex_count_) && (v >= 1));
+        }
+
+        bool bfs_traversal(int start, std::vector<int> &traversal)
+        {
+            if (!has_node(start))
+            {
+                return false;
+            }
+
+            Queue<int> q;
+            bool *discovered = new bool[vertex_count_]();
+
+            q.push(start - 1);
+            discovered[start - 1] = 1;
+            traversal.push_back(start);
+
+            while (!q.empty())
+            {
+                int v = q.pop();
+                for (int w = 0; w < vertex_count_; w++)
+                {
+                    if (adj_[v][w] != 0)
+                    {
+                        if (!discovered[w])
+                        {
+                            traversal.push_back(w + 1);
+                            discovered[w] = true;
+                            q.push(w);
+                        }
+                    }
+                }
+            }
+
+            delete[] discovered;
+            return true;
+        }
+
+        bool dfs_traversal(int start, std::vector<int> &traversal)
+        {
+            if (!has_node(start))
+            {
+                return false;
+            }
+
+            Stack<int> st;
+            bool *discovered = new bool[vertex_count_]();
+
+            st.push(start - 1);
+
+            while (!st.empty())
+            {
+                int v = st.pop();
+                if (!discovered[v])
+                {
+                    discovered[v] = true;
+                    traversal.push_back(v + 1);
+                    for (int w = vertex_count_ - 1; w >= 0; w--)
+                    {
+                        if (adj_[v][w] != 0)
+                        {
+                            st.push(w);
+                        }
+                    }
+                }
+            }
+
+            delete[] discovered;
+            return true;
         }
 
         friend std::ostream& operator<< (std::ostream &out, const Graph &g)
@@ -50,12 +134,12 @@ class Graph {
             out << "Graph(\n";
             for(int i = 0; i < g.vertex_count_; i++)
             {
-                out << i <<": ";
+                out << i + 1 <<": ";
                 for (int j = 0; j < g.vertex_count_; j++)
                 {
                     if (g.adj_[i][j] != 0)
                     {
-                        out << j << " ";
+                        out << j + 1 << " ";
                     }
                 }
                 if (i != g.vertex_count_ - 1)

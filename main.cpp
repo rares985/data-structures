@@ -6,8 +6,23 @@
 
 #include <memory>
 #include <cassert>
+#include <vector>
+#include <sstream>
 
 #include <iostream>
+
+static std::string vec2String(std::vector<int> vec)
+{
+    std::stringstream ss;
+
+    ss << "[";
+    for(std::vector<int>::iterator it = vec.begin(); it != vec.end(); ++it)
+    {
+
+        ss << *it << (it != vec.end() - 1 ? " " : "]");
+    }
+    return ss.str();
+}
 
 static void test_sll(void)
 {
@@ -144,12 +159,31 @@ static void test_queue(void)
 
 static void test_graph(void)
 {
-    Graph *g = new Graph(3, false);
+    Graph *g = new Graph(9, false);
 
-    g->add_edge(0, 1);
-    g->add_edge(1, 2);
+    g->add_edge(1,2);
+    g->add_edge(2,8);
+    g->add_edge(8,3);
+    g->add_edge(3,6);
+    g->add_edge(6,7);
+
+    g->add_edge(3,4);
+    g->add_edge(4,5);
+    g->add_edge(5,9);
+    g->add_edge(9,1);
+    g->add_edge(4,1);
 
     std::cout << *g;
+
+    std::vector<int> traversal;
+
+    assert(true == g->bfs_traversal(1, traversal));
+
+    std::cout << "\nBFS Traversal: " << vec2String(traversal);
+
+    traversal.clear();
+    assert(true == g->dfs_traversal(1, traversal));
+    std::cout << "\nDFS Traversal: " << vec2String(traversal);
 
     delete g;
 }
