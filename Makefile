@@ -1,37 +1,22 @@
-CC=gcc
-CFLAGS=-Wall -Wextra -Werror -g
-CFLAGS+=-Iinc -Ipublic
-LDFLAGS=-ldata-structures -L/home/uidn4121/shared/personal/data-structures
-.DEFAULT_GOAL := main
+CXX=g++
+CXXFLAGS=-Wall -Wextra -std=c++11 -g
+# CXXFLAGS += -Werror
 
-LIBNAME=libdata-structures.so
+INCLUDES=-Iinc
 
-SLL_TEST_EXE=sll_test
-DLL_TEST_EXE=dll_test
+EXE=main
+OBJ_DIR=obj/
 
-TEST_EXES=$(SLL_TEST_EXE) $(DLL_TEST_EXE)
+SRC := $(wildcard src/.cpp)
+OBJ = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
-all: main
+$(EXE): main.cpp $(OBJ)
+	$(CXX) $(INCLUDES) $(CXXFLAGS) $^ -o $@
 
-main: main.c $(LIBNAME)
-	$(CC) $(CFLAGS) main.c -o $@ $(LDFLAGS)
-
-
-$(LIBNAME): data-structures.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,$(LIBNAME) *.o -o $@
-
-data-structures.o: src/*.c
-	@echo "Creating the shared library..."
-	$(CC) $(CFLAGS) -c -fpic -fPIC $^
-
-
-test: $(TEST_EXES)
-
-$(SLL_TEST_EXE): test/$(SLL_TEST_EXE).c $(LIBNAME)
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-
-$(DLL_TEST_EXE): test/$(DLL_TEST_EXE).c $(LIBNAME)
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)	
+$(OBJ): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(INCLUDES) $(CXXFLAGS) -o $@ -c $<
 
 clean:
-	rm main *.o *.so
+	rm -rf *.o
+	rm -rf obj/*.o
+	rm -rf $(EXE)

@@ -1,4 +1,0 @@
-#ifndef UNDIRECTED_GRAPH_H_
-#define UNDIRECTED_GRAPH_H_
-
-#endif /* UNDIRECTED_GRAPH_H_ */
