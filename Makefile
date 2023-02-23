@@ -7,8 +7,12 @@ INCLUDES=-Iinc
 EXE=main
 OBJ_DIR=obj/
 
+.PHONY: all
+
 SRC := $(wildcard src/.cpp)
 OBJ = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
+
+all: $(EXE)
 
 $(EXE): main.cpp $(OBJ)
 	$(CXX) $(INCLUDES) $(CXXFLAGS) $^ -o $@
