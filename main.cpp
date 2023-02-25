@@ -2,9 +2,11 @@
 #include <double_linked_list.h>
 #include <stack.h>
 #include <queue.h>
-// #include <graph.h>
+#include <graph.h>
+
 #include <unique_ptr.h>
 #include <shared_ptr.h>
+
 #include "SHA256.h"
 
 #include <memory>
@@ -163,36 +165,34 @@ static void test_queue(void)
     q->Push(5);
 }
 
-// static void test_graph(void)
-// {
-//     Graph *g = new Graph(9, false);
+static void test_graph(void)
+{
+    UniquePtr<Graph> g{new Graph{9, false}};
 
-//     g->add_edge(1, 2);
-//     g->add_edge(2, 8);
-//     g->add_edge(8, 3);
-//     g->add_edge(3, 6);
-//     g->add_edge(6, 7);
+    g->AddEdge(1, 2);
+    g->AddEdge(2, 8);
+    g->AddEdge(8, 3);
+    g->AddEdge(3, 6);
+    g->AddEdge(6, 7);
 
-//     g->add_edge(3, 4);
-//     g->add_edge(4, 5);
-//     g->add_edge(5, 9);
-//     g->add_edge(9, 1);
-//     g->add_edge(4, 1);
+    g->AddEdge(3, 4);
+    g->AddEdge(4, 5);
+    g->AddEdge(5, 9);
+    g->AddEdge(9, 1);
+    g->AddEdge(4, 1);
 
-//     std::cout << *g;
+    std::cout << *g << "\n";
 
-//     std::vector<int> traversal;
+    std::vector<int> traversal;
 
-//     assert(true == g->bfs_traversal(1, traversal));
+    assert(true == g->BFSTraversal(1, traversal));
 
-//     std::cout << "\nBFS Traversal: " << vec2String(traversal);
+    std::cout << "BFS Traversal: " << vec2String(traversal) << "\n";
 
-//     traversal.clear();
-//     assert(true == g->dfs_traversal(1, traversal));
-//     std::cout << "\nDFS Traversal: " << vec2String(traversal);
-
-//     delete g;
-// }
+    traversal.clear();
+    assert(true == g->DFSTraversal(1, traversal));
+    std::cout << "DFS Traversal: " << vec2String(traversal) << "\n";
+}
 
 int main()
 {
@@ -205,7 +205,9 @@ int main()
     test_queue();
     std::cout << "Queue Test ------------- OK\n";
     test_shared_ptr();
-    // test_graph();
+    std::cout << "Shared PTR Test ------------- OK\n";
+    test_graph();
+    std::cout << "Graph Test ------------- OK\n";
 
     SHA256 sha2;
     sha2.update(std::string("test"));

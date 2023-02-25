@@ -34,7 +34,7 @@ public:
         delete[] adj_;
     }
 
-    void add_edge(int v1, int v2, int weight = 1)
+    void AddEdge(int v1, int v2, int weight = 1)
     {
         if (v1 < 1 || v2 < 1)
         {
@@ -48,7 +48,7 @@ public:
         }
     }
 
-    bool is_edge(int v1, int v2)
+    bool IsEdge(int v1, int v2)
     {
         if (v1 < 1 || v2 < 1)
         {
@@ -57,14 +57,14 @@ public:
         return adj_[v1 - 1][v2 - 1] != 0;
     }
 
-    bool has_node(int v)
+    bool HasNode(int v)
     {
         return ((v < vertex_count_) && (v >= 1));
     }
 
-    bool bfs_traversal(int start, std::vector<int> &traversal)
+    bool BFSTraversal(int start, std::vector<int> &traversal)
     {
-        if (!has_node(start))
+        if (!HasNode(start))
         {
             return false;
         }
@@ -72,13 +72,13 @@ public:
         Queue<int> q;
         bool *discovered = new bool[vertex_count_]();
 
-        q.push(start - 1);
+        q.Push(start - 1);
         discovered[start - 1] = 1;
         traversal.push_back(start);
 
         while (!q.Empty())
         {
-            int v = q.pop();
+            int v = q.Pop();
             for (int w = 0; w < vertex_count_; w++)
             {
                 if (adj_[v][w] != 0)
@@ -87,7 +87,7 @@ public:
                     {
                         traversal.push_back(w + 1);
                         discovered[w] = true;
-                        q.push(w);
+                        q.Push(w);
                     }
                 }
             }
@@ -97,9 +97,9 @@ public:
         return true;
     }
 
-    bool dfs_traversal(int start, std::vector<int> &traversal)
+    bool DFSTraversal(int start, std::vector<int> &traversal)
     {
-        if (!has_node(start))
+        if (!HasNode(start))
         {
             return false;
         }
@@ -107,11 +107,11 @@ public:
         Stack<int> st;
         bool *discovered = new bool[vertex_count_]();
 
-        st.push(start - 1);
+        st.Push(start - 1);
 
         while (!st.Empty())
         {
-            int v = st.pop();
+            int v = st.Pop();
             if (!discovered[v])
             {
                 discovered[v] = true;
@@ -120,7 +120,7 @@ public:
                 {
                     if (adj_[v][w] != 0)
                     {
-                        st.push(w);
+                        st.Push(w);
                     }
                 }
             }
