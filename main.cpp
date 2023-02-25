@@ -4,6 +4,7 @@
 #include <queue.h>
 #include <graph.h>
 #include <vector.h>
+#include <sort.h>
 
 #include <unique_ptr.h>
 #include <shared_ptr.h>
@@ -49,6 +50,50 @@ static void test_vector(void)
     std::cout << v[0] << v[1] << "\n";
 
     std::cout << v << "\n";
+}
+
+static void test_utils(void)
+{
+    Vector<int> v{5};
+    v.PushBack(5);
+    v.PushBack(4);
+    v.PushBack(3);
+    v.PushBack(2);
+    v.PushBack(1);
+
+    Sorter::BubbleSort(v);
+    std::cout << "BUBBLE SORT: " << v << "\n";
+
+    v = Vector<int>{5};
+    v.PushBack(5);
+    v.PushBack(4);
+    v.PushBack(3);
+    v.PushBack(2);
+    v.PushBack(1);
+
+    Sorter::InsertionSort(v);
+    std::cout << "INSERTION SORT: " << v << "\n";
+
+    v = Vector<int>{5};
+    v.PushBack(5);
+    v.PushBack(4);
+    v.PushBack(3);
+    v.PushBack(2);
+    v.PushBack(1);
+
+    /* TODO - Not working OK */
+    Sorter::SelectionSort(v);
+    std::cout << "SELECTION SORT: " << v << "\n";
+
+    v = Vector<int>{5};
+    v.PushBack(5);
+    v.PushBack(4);
+    v.PushBack(3);
+    v.PushBack(2);
+    v.PushBack(1);
+
+    Sorter::QuickSort(v);
+    std::cout << "QUICK SORT: " << v << "\n";
 }
 
 static void test_sll(void)
@@ -211,6 +256,8 @@ int main()
 {
     test_vector();
     std::cout << "Vector Test ------------- OK\n";
+    test_utils();
+    std::cout << "Utils Test ------------- OK\n";
     test_sll();
     std::cout << "SLL Test ------------- OK\n";
     test_dll();

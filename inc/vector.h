@@ -3,6 +3,7 @@
 
 #include <ostream>
 
+/* TODO: add begin(), end(), cbegin(), cend(), constructor from iterators for merge-sort */
 template <typename T>
 class Vector
 {
@@ -28,6 +29,8 @@ public:
         this->size_ = other.size_;
         this->capacity_ = other.capacity_;
         this->arr_ = other.arr_;
+
+        return *this;
     }
 
     Vector &operator=(Vector &&other)
@@ -40,6 +43,8 @@ public:
 
         this->arr_ = other.arr_;
         other.arr_ = 0;
+
+        return *this;
     }
 
     void PushBack(T elem)
