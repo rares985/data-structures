@@ -3,6 +3,7 @@
 #include <stack.h>
 #include <queue.h>
 #include <graph.h>
+#include <vector.h>
 
 #include <unique_ptr.h>
 #include <shared_ptr.h>
@@ -36,6 +37,18 @@ static void test_shared_ptr(void)
     SharedPtr<int> sptr3{std::move(sptr2)};
 
     std::cout << *sptr3 << "\n";
+}
+
+static void test_vector(void)
+{
+    Vector<int> v{2};
+
+    v.PushBack(1);
+    v.PushBack(2);
+
+    std::cout << v[0] << v[1] << "\n";
+
+    std::cout << v << "\n";
 }
 
 static void test_sll(void)
@@ -196,6 +209,8 @@ static void test_graph(void)
 
 int main()
 {
+    test_vector();
+    std::cout << "Vector Test ------------- OK\n";
     test_sll();
     std::cout << "SLL Test ------------- OK\n";
     test_dll();
