@@ -17,11 +17,11 @@ public:
     Queue(Queue &other) = delete;
     Queue(Queue &&other) : lst{std::move(other.lst)} {}
 
-    T front()
+    T Front()
     {
         try
         {
-            return lst->front();
+            return lst->Front();
         }
         catch (std::out_of_range &ex)
         {
@@ -29,11 +29,11 @@ public:
         }
     }
 
-    T back()
+    T Back()
     {
         try
         {
-            return lst->back();
+            return lst->Back();
         }
         catch (std::out_of_range &ex)
         {
@@ -41,24 +41,24 @@ public:
         }
     }
 
-    bool empty()
+    bool Empty()
     {
-        return lst->empty();
+        return lst->Empty();
     }
 
-    int size()
+    int Size()
     {
-        return lst->size();
+        return lst->Size();
     }
 
-    bool push(T value)
+    bool Push(T value)
     {
-        return lst->push_back(value);
+        return lst->PushBack(value);
     }
 
-    T pop()
+    T Pop()
     {
-        return lst->pop_front();
+        return lst->PopFront();
     }
 
     friend std::ostream &operator<<(std::ostream &out, const Queue<T> &q)

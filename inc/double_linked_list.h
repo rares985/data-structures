@@ -35,7 +35,7 @@ public:
         Node<T> *it = nullptr;
         Node<T> *temp = nullptr;
 
-        if (empty())
+        if (Empty())
         {
             return;
         }
@@ -52,12 +52,12 @@ public:
         head_ = nullptr;
     }
 
-    bool empty()
+    bool Empty()
     {
         return (head_ == nullptr);
     }
 
-    int size()
+    int Size()
     {
         int size = 0;
         Node<T> *it = head_;
@@ -71,12 +71,12 @@ public:
         return size;
     }
 
-    T *front()
+    T *Front()
     {
         return (head_ ? head_->data : nullptr);
     }
 
-    T *back()
+    T *Back()
     {
         Node<T> *it = nullptr;
         T *ret = nullptr;
@@ -91,7 +91,7 @@ public:
         return ret;
     }
 
-    bool push_front(T value)
+    bool PushFront(T value)
     {
         Node<T> *elem = new Node<T>{value, nullptr, head_};
 
@@ -103,10 +103,10 @@ public:
         return true;
     }
 
-    T pop_front()
+    T PopFront()
     {
 
-        if (empty())
+        if (Empty())
         {
             return 0;
         }
@@ -122,7 +122,7 @@ public:
         return ret;
     }
 
-    bool push_back(T value)
+    bool PushBack(T value)
     {
         bool ret = false;
 
@@ -147,12 +147,12 @@ public:
         return ret;
     }
 
-    T pop_back()
+    T PopBack()
     {
         Node<T> *it = nullptr;
         T ret = 0;
 
-        if (empty())
+        if (Empty())
         {
             return 0;
         }

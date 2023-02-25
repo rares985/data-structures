@@ -76,7 +76,7 @@ public:
         discovered[start - 1] = 1;
         traversal.push_back(start);
 
-        while (!q.empty())
+        while (!q.Empty())
         {
             int v = q.pop();
             for (int w = 0; w < vertex_count_; w++)
@@ -109,7 +109,7 @@ public:
 
         st.push(start - 1);
 
-        while (!st.empty())
+        while (!st.Empty())
         {
             int v = st.pop();
             if (!discovered[v])

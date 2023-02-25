@@ -39,132 +39,128 @@ static void test_shared_ptr(void)
 static void test_sll(void)
 {
     UniquePtr<SingleLinkedList<int>> lst{new SingleLinkedList<int>{}};
-    lst->push_back(2);
-    lst->push_back(3);
-    lst->push_back(4);
-    lst->push_front(1);
-    lst->push_front(2);
-    lst->push_front(3);
-    lst->push_front(4);
+    lst->PushBack(5);
+    lst->PushBack(6);
+    lst->PushBack(7);
+    lst->PushFront(4);
+    lst->PushFront(3);
+    lst->PushFront(2);
+    lst->PushFront(1);
+    lst->PushFront(0);
 
-    assert(lst->size() == 7);
+    assert(lst->Size() == 8);
+
+    std::cout << *lst << "\n";
+    lst->Reverse();
+    std::cout << *lst << "\n";
+    lst->Reverse();
+    std::cout << *lst << "\n";
 
     int ret;
 
-    ret = lst->pop_back();
-    assert(ret == 4);
+    for (int i = 7; i >= 0; i--)
+    {
+        ret = lst->PopBack();
+        assert(ret == i);
+    }
 
-    ret = lst->pop_back();
-    assert(ret == 3);
+    ret = lst->PopFront();
+    assert(ret == 0);
 
-    ret = lst->pop_back();
-    assert(ret == 2);
-
-    ret = lst->pop_back();
-    assert(ret == 1);
-
-    ret = lst->pop_back();
-    assert(ret == 2);
-
-    ret = lst->pop_back();
-    assert(ret == 3);
-
-    ret = lst->pop_back();
-    assert(ret == 4);
-
-    assert(lst->size() == 0);
-    assert(lst->empty() == true);
+    assert(lst->Size() == 0);
+    assert(lst->Empty() == true);
+    assert(lst->HasCycle() == false);
 }
 
 static void test_dll(void)
 {
     UniquePtr<DoubleLinkedList<int>> lst{new DoubleLinkedList<int>{}};
 
-    lst->push_back(2);
-    lst->push_back(3);
-    lst->push_back(4);
-    lst->push_front(1);
+    lst->PushBack(2);
+    lst->PushBack(3);
+    lst->PushBack(4);
+    lst->PushFront(1);
 
-    assert(lst->size() == 4);
+    assert(lst->Size() == 4);
 
     int ret;
 
-    ret = lst->pop_back();
+    ret = lst->PopBack();
     assert(ret == 4);
 
-    ret = lst->pop_back();
+    ret = lst->PopBack();
     assert(ret == 3);
 
-    ret = lst->pop_back();
+    ret = lst->PopBack();
     assert(ret == 2);
 
-    ret = lst->pop_back();
+    ret = lst->PopBack();
     assert(ret == 1);
 
-    assert(lst->size() == 0);
-    assert(lst->empty() == true);
+    assert(lst->Size() == 0);
+    assert(lst->Empty() == true);
 }
 
 static void test_stack(void)
 {
     UniquePtr<Stack<int>> st{new Stack<int>{}};
 
-    st->push(2);
-    st->push(3);
-    st->push(4);
-    st->push(5);
+    st->Push(2);
+    st->Push(3);
+    st->Push(4);
+    st->Push(5);
 
-    assert(st->size() == 4);
-    assert(st->top() == 5);
+    assert(st->Size() == 4);
+    assert(st->Top() == 5);
 
-    int ret = st->pop();
+    int ret = st->Pop();
     assert(ret == 5);
 
-    ret = st->pop();
+    ret = st->Pop();
     assert(ret == 4);
 
-    ret = st->pop();
+    ret = st->Pop();
     assert(ret == 3);
 
-    ret = st->pop();
+    ret = st->Pop();
     assert(ret == 2);
 
-    assert(st->size() == 0);
-    assert(st->empty() == true);
+    assert(st->Size() == 0);
+    assert(st->Empty() == true);
 }
 
 static void test_queue(void)
 {
     UniquePtr<Queue<int>> q{new Queue<int>{}};
 
-    q->push(1);
-    q->push(2);
-    q->push(3);
-    q->push(4);
-    q->push(5);
+    q->Push(1);
+    q->Push(2);
+    q->Push(3);
+    q->Push(4);
+    q->Push(5);
 
-    assert(q->size() == 5);
-    assert(q->front() == 1);
-    assert(q->back() == 5);
+    assert(q->Size() == 5);
+    assert(q->Front() == 1);
+    assert(q->Back() == 5);
 
-    int ret = q->pop();
+    int ret = q->Pop();
     assert(ret == 1);
-    ret = q->pop();
+    ret = q->Pop();
     assert(ret == 2);
-    ret = q->pop();
+    ret = q->Pop();
     assert(ret == 3);
-    ret = q->pop();
+    ret = q->Pop();
     assert(ret == 4);
-    ret = q->pop();
+    ret = q->Pop();
     assert(ret == 5);
 
     q.reset(new Queue<int>{});
 
-    q->push(1);
-    q->push(2);
-    q->push(3);
-    q->push(4);
-    q->push(5);
+    q->Push(1);
+    q->Push(2);
+    q->Push(3);
+    q->Push(4);
+    q->Push(5);
 }
 
 // static void test_graph(void)

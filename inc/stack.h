@@ -21,21 +21,21 @@ public:
         this->lst = std::move(other.lst);
     }
 
-    bool empty()
+    bool Empty()
     {
-        return lst->empty();
+        return lst->Empty();
     }
 
-    int size()
+    int Size()
     {
-        return lst->size();
+        return lst->Size();
     }
 
-    T top()
+    T Top()
     {
         try
         {
-            return lst->front();
+            return lst->Front();
         }
         catch (std::out_of_range &ex)
         {
@@ -43,14 +43,14 @@ public:
         }
     }
 
-    bool push(T value)
+    bool Push(T value)
     {
-        return lst->push_front(value);
+        return lst->PushFront(value);
     }
 
-    T pop()
+    T Pop()
     {
-        return lst->pop_front();
+        return lst->PopFront();
     }
 
     friend std::ostream &operator<<(std::ostream &out, const Stack<T> &st)

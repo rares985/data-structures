@@ -33,7 +33,7 @@ public:
         Node<T> *it = nullptr;
         Node<T> *temp = nullptr;
 
-        if (empty())
+        if (Empty())
         {
             return;
         }
@@ -50,12 +50,12 @@ public:
         head_ = nullptr;
     }
 
-    bool empty()
+    bool Empty()
     {
         return (head_ == nullptr);
     }
 
-    int size()
+    int Size()
     {
         int size = 0;
         Node<T> *it = head_;
@@ -69,7 +69,7 @@ public:
         return size;
     }
 
-    T front()
+    T Front()
     {
         if (head_)
         {
@@ -81,7 +81,7 @@ public:
         }
     }
 
-    T back()
+    T Back()
     {
         if (!head_)
         {
@@ -97,7 +97,7 @@ public:
         return *(it->data);
     }
 
-    bool push_front(T value)
+    bool PushFront(T value)
     {
         Node<T> *elem = new Node<T>{value, head_};
         head_ = elem;
@@ -105,10 +105,10 @@ public:
         return true;
     }
 
-    T pop_front()
+    T PopFront()
     {
 
-        if (empty())
+        if (Empty())
         {
             return 0;
         }
@@ -124,7 +124,7 @@ public:
         return ret;
     }
 
-    bool push_back(T value)
+    bool PushBack(T value)
     {
         bool ret = false;
 
@@ -151,13 +151,13 @@ public:
         return ret;
     }
 
-    T pop_back()
+    T PopBack()
     {
         Node<T> *it = nullptr;
         Node<T> *prev = nullptr;
         T ret = 0;
 
-        if (empty())
+        if (Empty())
         {
             return 0;
         }
@@ -185,6 +185,52 @@ public:
         it = nullptr;
 
         return ret;
+    }
+
+    void Reverse()
+    {
+        Node<T> *current = head_;
+        Node<T> *prev = nullptr;
+        Node<T> *next = nullptr;
+
+        while (current != nullptr)
+        {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head_ = prev;
+    }
+
+    bool HasCycle()
+    {
+        if (!head_ || !head_->next)
+        {
+            /* 1 element list with nullptr at end cannot have cycle */
+            return false;
+        }
+
+        Node<T> *slow = head_;
+        Node<T> *fast = head_->next;
+
+        while (slow && fast)
+        {
+            slow = slow->next;
+            if (!fast->next)
+            {
+                /* Fast reached end, no cycle exists */
+                return false;
+            }
+            fast = fast->next->next;
+            if (slow == fast)
+            {
+                return true;
+            }
+        }
+
+        /* One of the pointers reached nullptr, no cycle exists */
+        return false;
     }
 
     template <typename U>
