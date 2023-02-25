@@ -4,6 +4,7 @@
 #include <queue.h>
 // #include <graph.h>
 #include <unique_ptr.h>
+#include "SHA256.h"
 
 #include <memory>
 #include <cassert>
@@ -198,6 +199,12 @@ int main()
     test_queue();
     std::cout << "Queue Test ------------- OK\n";
     // test_graph();
+
+    SHA256 sha2;
+    sha2.update(std::string("test"));
+    uint8_t *digest = sha2.digest();
+    std::cout << SHA256::toString(digest) << "\n";
+    delete[] digest;
 
     return 0;
 }
