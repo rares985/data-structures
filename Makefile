@@ -17,8 +17,6 @@ OBJ = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 all: $(EXE)
 
 $(EXE): main.cpp $(OBJ)
-	echo $(SRC)
-	echo $(OBJ)
 	$(CXX) $(INCLUDES) $(CXXFLAGS) $^ -o $@
 
 $(OBJ): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp

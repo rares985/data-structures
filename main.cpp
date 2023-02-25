@@ -4,6 +4,7 @@
 #include <queue.h>
 // #include <graph.h>
 #include <unique_ptr.h>
+#include <shared_ptr.h>
 #include "SHA256.h"
 
 #include <memory>
@@ -24,6 +25,15 @@ static std::string vec2String(std::vector<int> vec)
         ss << *it << (it != vec.end() - 1 ? " " : "]");
     }
     return ss.str();
+}
+
+static void test_shared_ptr(void)
+{
+    SharedPtr<int> sptr1{new int{2}};
+    SharedPtr<int> sptr2{sptr1};
+    SharedPtr<int> sptr3{std::move(sptr2)};
+
+    std::cout << *sptr3 << "\n";
 }
 
 static void test_sll(void)
@@ -198,6 +208,7 @@ int main()
     std::cout << "Stack Test ------------- OK\n";
     test_queue();
     std::cout << "Queue Test ------------- OK\n";
+    test_shared_ptr();
     // test_graph();
 
     SHA256 sha2;
