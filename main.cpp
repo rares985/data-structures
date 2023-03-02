@@ -4,7 +4,9 @@
 #include <queue.h>
 #include <graph.h>
 #include <vector.h>
-#include <sort.h>
+// #include <sort.h>
+
+#include <binary_tree.h>
 
 #include <unique_ptr.h>
 #include <shared_ptr.h>
@@ -15,7 +17,7 @@
 #include <cassert>
 #include <vector>
 #include <sstream>
-
+#include <map>
 #include <iostream>
 
 static std::string vec2String(std::vector<int> vec)
@@ -52,49 +54,49 @@ static void test_vector(void)
     std::cout << v << "\n";
 }
 
-static void test_utils(void)
-{
-    Vector<int> v{5};
-    v.PushBack(5);
-    v.PushBack(4);
-    v.PushBack(3);
-    v.PushBack(2);
-    v.PushBack(1);
+// static void test_utils(void)
+// {
+//     Vector<int> v{5};
+//     v.PushBack(5);
+//     v.PushBack(4);
+//     v.PushBack(3);
+//     v.PushBack(2);
+//     v.PushBack(1);
 
-    Sorter::BubbleSort(v);
-    std::cout << "BUBBLE SORT: " << v << "\n";
+//     Sorter::BubbleSort(v);
+//     std::cout << "BUBBLE SORT: " << v << "\n";
 
-    v = Vector<int>{5};
-    v.PushBack(5);
-    v.PushBack(4);
-    v.PushBack(3);
-    v.PushBack(2);
-    v.PushBack(1);
+//     v = Vector<int>{5};
+//     v.PushBack(5);
+//     v.PushBack(4);
+//     v.PushBack(3);
+//     v.PushBack(2);
+//     v.PushBack(1);
 
-    Sorter::InsertionSort(v);
-    std::cout << "INSERTION SORT: " << v << "\n";
+//     Sorter::InsertionSort(v);
+//     std::cout << "INSERTION SORT: " << v << "\n";
 
-    v = Vector<int>{5};
-    v.PushBack(5);
-    v.PushBack(4);
-    v.PushBack(3);
-    v.PushBack(2);
-    v.PushBack(1);
+//     v = Vector<int>{5};
+//     v.PushBack(5);
+//     v.PushBack(4);
+//     v.PushBack(3);
+//     v.PushBack(2);
+//     v.PushBack(1);
 
-    /* TODO - Not working OK */
-    Sorter::SelectionSort(v);
-    std::cout << "SELECTION SORT: " << v << "\n";
+//     /* TODO - Not working OK */
+//     Sorter::SelectionSort(v);
+//     std::cout << "SELECTION SORT: " << v << "\n";
 
-    v = Vector<int>{5};
-    v.PushBack(5);
-    v.PushBack(4);
-    v.PushBack(3);
-    v.PushBack(2);
-    v.PushBack(1);
+//     v = Vector<int>{5};
+//     v.PushBack(5);
+//     v.PushBack(4);
+//     v.PushBack(3);
+//     v.PushBack(2);
+//     v.PushBack(1);
 
-    Sorter::QuickSort(v);
-    std::cout << "QUICK SORT: " << v << "\n";
-}
+//     Sorter::QuickSort(v);
+//     std::cout << "QUICK SORT: " << v << "\n";
+// }
 
 static void test_sll(void)
 {
@@ -252,30 +254,58 @@ static void test_graph(void)
     std::cout << "DFS Traversal: " << vec2String(traversal) << "\n";
 }
 
+static void test_binary_tree()
+{
+    // 2
+    //  3
+    //      5
+    //      6
+    //  4
+    //      7
+    //      8
+    BinaryTree<int> ll{9};
+    BinaryTree<int> lr{16};
+    BinaryTree<int> rl{21};
+    BinaryTree<int> rr{23};
+
+    BinaryTree<int> l{14, &ll, &lr};
+    BinaryTree<int> r{22, &rl, &rr};
+
+    BinaryTree<int> x{19, &l, &r};
+
+    std::cout << x << "\n";
+    // std::cout << "Inorder traversal: " << x.Inorder() << "\n";
+    // std::cout << x.Str(0) << "\n";
+}
+
 int main()
 {
-    test_vector();
-    std::cout << "Vector Test ------------- OK\n";
-    test_utils();
-    std::cout << "Utils Test ------------- OK\n";
-    test_sll();
-    std::cout << "SLL Test ------------- OK\n";
-    test_dll();
-    std::cout << "DLL Test ------------- OK\n";
-    test_stack();
-    std::cout << "Stack Test ------------- OK\n";
-    test_queue();
-    std::cout << "Queue Test ------------- OK\n";
-    test_shared_ptr();
-    std::cout << "Shared PTR Test ------------- OK\n";
-    test_graph();
-    std::cout << "Graph Test ------------- OK\n";
+    test_binary_tree();
 
-    SHA256 sha2;
-    sha2.update(std::string("test"));
-    uint8_t *digest = sha2.digest();
-    std::cout << SHA256::toString(digest) << "\n";
-    delete[] digest;
+    // test_list_comprehensive();
+
+    // test_vector();
+    // std::cout << "Vector Test ------------- OK\n";
+    // test_utils();
+    // std::cout << "Utils Test ------------- OK\n";
+    // test_sll();
+    // std::cout << "SLL Test ------------- OK\n";
+    // test_dll();
+    // std::cout << "DLL Test ------------- OK\n";
+    // test_stack();
+    // std::cout << "Stack Test ------------- OK\n";
+    // test_queue();
+    // std::cout << "Queue Test ------------- OK\n";
+    // test_shared_ptr();
+    // std::cout << "Shared PTR Test ------------- OK\n";
+    // test_graph();
+    // std::cout << "Graph Test ------------- OK\n";
+
+    // SHA256 sha2;
+    // sha2.update(std::string("test"));
+    // uint8_t *digest = sha2.digest();
+    // std::cout << SHA256::toString(digest) << "\n";
+    // delete[] digest;
 
     return 0;
 }
