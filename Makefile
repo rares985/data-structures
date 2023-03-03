@@ -4,7 +4,8 @@ CXXFLAGS=-Wall -Wextra -std=c++17 -g -Wno-unused-function
 
 INCLUDES=-Iinc
 
-EXE=main
+EXE=tests
+EXE_CPP=$(EXE).cpp
 OBJ_DIR=obj/
 SRC_DIR = src/
 
@@ -16,7 +17,7 @@ OBJ = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
 all: $(EXE)
 
-$(EXE): main.cpp $(OBJ)
+$(EXE): $(EXE_CPP) $(OBJ)
 	$(CXX) $(INCLUDES) $(CXXFLAGS) $^ -o $@
 
 $(OBJ): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp

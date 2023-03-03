@@ -7,6 +7,7 @@
 // #include <sort.h>
 
 #include <binary_tree.h>
+#include <binary_search_tree.h>
 
 #include <unique_ptr.h>
 #include <shared_ptr.h>
@@ -278,9 +279,22 @@ static void test_binary_tree()
     // std::cout << x.Str(0) << "\n";
 }
 
+static void test_bst()
+{
+    BinarySearchTree<int> x{100};
+
+    x.Insert(50);
+    x.Insert(150);
+    x.Insert(125);
+    std::cout << x << "\n";
+    x.Insert(200);
+    std::cout << x << "\n";
+}
+
 int main()
 {
-    test_binary_tree();
+    // test_binary_tree();
+    test_bst();
 
     // test_list_comprehensive();
 

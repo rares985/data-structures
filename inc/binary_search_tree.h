@@ -2,29 +2,65 @@
 #define BINARY_SEARCH_TREE_H_
 
 #include <binary_tree.h>
-#include <binary_tree_node.h>
 
 template <typename T>
 class BinarySearchTree : public BinaryTree<T>
 {
+public:
     bool Find(T key) override
     {
-        if (value_ == key)
+        if (this->value_ == key)
         {
             return true;
         }
 
-        if (key < value_)
+        if (key < this->value_)
         {
-            return HasLeft() && Left()->Find(key);
+            return this->HasLeft() && this->left_->Find(key);
         }
-        if (key > value_)
+        if (key > this->value_)
         {
-            return HasRight() && Right()->Find(key);
+            return this->HasRight() && this->right_->Find(key);
+        }
+        return false;
+    }
+
+    void Insert(T key) override
+    {
+        if (this->HasLeft() && key < this->value_)
+        {
+            /* Recurse left */
+            return this->left_->Insert(key);
+        }
+
+        if (this->HasRight() && key > this->value_)
+        {
+            /* Recurse right */
+            return this->right_->Insert(key);
+        }
+
+        /* Insert left/right depending on root's value */
+        if (key < this->value_)
+        {
+            return this->InsertLeft(new BinarySearchTree<T>{key});
+        }
+        else
+        {
+            return this->InsertRight(new BinarySearchTree<T>{key});
         }
     }
 
-    void Insert(T key)
+    bool Delete(T key)
+    {
+        if (!Find(key))
+        {
+            return false;
+        }
+
+        if (key ==)
+
+            return false;
+    }
 };
 
 #endif /* BINARY_SEARCH_TREE_H_ */
