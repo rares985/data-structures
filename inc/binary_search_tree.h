@@ -25,7 +25,7 @@ private:
         return false;
     }
 
-    Node<T> *Find(Node<T> *leaf, int key)
+    Node<T> *Find(Node<T> *leaf, T key)
     {
         if (leaf == nullptr)
         {
@@ -43,7 +43,7 @@ private:
             return Find(leaf->right, key);
     }
 
-    void Insert(Node<T> *leaf, int key)
+    void Insert(Node<T> *leaf, T key)
     {
         if (key < leaf->data)
         {
@@ -89,7 +89,7 @@ private:
             return FindMax(t->right);
     }
 
-    Node<T> *Remove(Node<T> *t, int key)
+    Node<T> *Remove(Node<T> *t, T key)
     {
         Node<T> *temp;
 
@@ -217,12 +217,26 @@ private:
         }
     }
 
+    int NbNodes(Node<T> *t)
+    {
+        if (t == nullptr)
+        {
+            return 0;
+        }
+        else
+        {
+            int lnb = NbNodes(t->left);
+            int rnb = NbNodes(t->right);
+            return 1 + lnb + rnb;
+        }
+    }
+
 public:
     BinarySearchTree() : root_{nullptr} {}
 
     ~BinarySearchTree() { DestroyTree(root_); }
 
-    void Insert(int key)
+    void Insert(T key)
     {
         if (root_ != nullptr)
         {
@@ -262,6 +276,17 @@ public:
     int MaxDepth()
     {
         return MaxDepth(root_);
+    }
+
+    int NbNodes()
+    {
+        return NbNodes(root_);
+    }
+
+    std::vector<T> ToVector()
+    {
+        /* TODO: To Be Implemented */
+        return std::vector<T>{};
     }
 };
 
