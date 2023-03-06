@@ -58,9 +58,30 @@ protected:
     BinaryTreeNode() {}
     BinaryTreeNode(BinaryTreeNode<T> *left, BinaryTreeNode<T> *right) : left_{left}, right_{right} {}
 
+    T Value() const { return value_; }
+
 public:
     BinaryTreeNode(T value) : value_{value}, left_{new EmptyNode<T>{}}, right_{new EmptyNode<T>{}} {}
-    BinaryTreeNode(T value, BinaryTreeNode<T> *left, BinaryTreeNode<T> *right) : value_{value}, left_{left}, right_{right} {}
+    BinaryTreeNode(T value, BinaryTreeNode<T> *left, BinaryTreeNode<T> *right) : value_{value}
+    {
+        if (left)
+        {
+            left_ = left;
+        }
+        else
+        {
+            left_ = new EmptyNode<T>{};
+        }
+
+        if (right)
+        {
+            right_ = right;
+        }
+        else
+        {
+            right_ = new EmptyNode<T>{};
+        }
+    }
 
     BinaryTreeNode(const BinaryTreeNode<T> &other)
     {
@@ -86,8 +107,8 @@ public:
         }
     }
 
-    BinaryTreeNode<T> *Left() { return left_; }
-    BinaryTreeNode<T> *Right() { return right_; }
+    BinaryTreeNode<T> *Left() const { return left_; }
+    BinaryTreeNode<T> *Right() const { return right_; }
 
     void SetLeft(BinaryTreeNode<T> *left)
     {

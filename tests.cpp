@@ -8,6 +8,7 @@
 #include <sstream>
 #include <map>
 #include <iostream>
+#include <binary_search_tree.h>
 
 static void test_binary_tree_node()
 {
@@ -45,8 +46,28 @@ static void test_binary_tree()
     std::cout << "DEPTH: " << x.Depth() << "\n";
     std::cout << "NB NODES: " << x.NbNodes() << "\n";
 }
+
+static void test_bst()
+{
+    BinarySearchTree<int> ll{1};
+
+    BinarySearchTree<int> lrl{4};
+    BinarySearchTree<int> lrr{7};
+    BinarySearchTree<int> lr{6, &lrl, &lrr};
+    BinarySearchTree<int> l{3, &ll, &lr};
+
+    BinarySearchTree<int> rrl{13};
+    BinarySearchTree<int> rr{14, &rrl, nullptr};
+    BinarySearchTree<int> r{10, nullptr, &rr};
+    BinarySearchTree<int> x{8, &l, &r};
+
+    std::cout << x << "\n";
+    std::cout << "DEPTH: " << x.Depth() << "\n";
+    std::cout << "NB NODES: " << x.NbNodes() << "\n";
+}
 int main()
 {
-    test_binary_tree();
+    // test_binary_tree();
+    test_bst();
     return 0;
 }
