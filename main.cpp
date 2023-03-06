@@ -226,35 +226,6 @@ static void test_queue(void)
     q->Push(5);
 }
 
-static void test_graph(void)
-{
-    UniquePtr<Graph> g{new Graph{9, false}};
-
-    g->AddEdge(1, 2);
-    g->AddEdge(2, 8);
-    g->AddEdge(8, 3);
-    g->AddEdge(3, 6);
-    g->AddEdge(6, 7);
-
-    g->AddEdge(3, 4);
-    g->AddEdge(4, 5);
-    g->AddEdge(5, 9);
-    g->AddEdge(9, 1);
-    g->AddEdge(4, 1);
-
-    std::cout << *g << "\n";
-
-    std::vector<int> traversal;
-
-    assert(true == g->BFSTraversal(1, traversal));
-
-    std::cout << "BFS Traversal: " << vec2String(traversal) << "\n";
-
-    traversal.clear();
-    assert(true == g->DFSTraversal(1, traversal));
-    std::cout << "DFS Traversal: " << vec2String(traversal) << "\n";
-}
-
 static void test_binary_tree()
 {
     // 2

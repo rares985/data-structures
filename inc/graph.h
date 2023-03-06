@@ -130,6 +130,42 @@ public:
         return true;
     }
 
+    std::vector<T> dijkstra(int source, int dest)
+    {
+    }
+
+    void tarjan()
+    {
+    }
+
+    void kosaraju()
+    {
+    }
+
+    void FordFulkerson()
+    {
+    }
+
+    void BellmanFord()
+    {
+    }
+
+    void Prim()
+    {
+    }
+
+    void Kruskal()
+    {
+    }
+
+    void FloydWarshall()
+    {
+    }
+
+    void AStar()
+    {
+    }
+
     friend std::ostream &operator<<(std::ostream &out, const Graph &g)
     {
         out << "Graph(\n";
