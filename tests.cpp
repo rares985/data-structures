@@ -10,8 +10,10 @@
 #include <binary_search_tree.h>
 #include <unique_ptr.h>
 #include <graph.h>
+#include <algorithm>
 
 #include <min_heap.h>
+#include <max_heap.h>
 
 template <typename T>
 std::string vec2String(std::vector<T> vec)
@@ -50,15 +52,30 @@ static void test_bst()
 static void test_min_heap()
 {
     MinHeap<int> *mh = new MinHeap<int>{20};
+    std::vector<int> elems{100, 90, 80, 70, 60, 50, 40, 30, 20, 10};
 
-    for (auto &elem : std::vector<int>{100, 90, 80, 70, 60, 50, 40, 30, 20, 10})
+    for (auto &elem : elems)
+    {
+        mh->Insert(elem);
+    }
+    auto it = std::min_element(elems.begin(), elems.end());
+    std::cout << "Minimum is : " << mh->Pop() << " " << *it << "\n";
+
+    delete mh;
+}
+
+static void test_max_heap()
+{
+    MaxHeap<int> *mh = new MaxHeap<int>{20};
+    std::vector<int> elems{100, 90, 80, 70, 60, 50, 40, 30, 20, 10};
+
+    for (auto &elem : elems)
     {
         mh->Insert(elem);
     }
 
-    std::cout << "Minimum is : " << mh->ExtractMin();
-
-    // std::cout << mh << "\n";
+    auto it = std::max_element(elems.begin(), elems.end());
+    std::cout << "Maximum is : " << mh->Pop() << " " << *it << "\n";
 
     delete mh;
 }
@@ -96,5 +113,6 @@ int main()
 {
     test_bst();
     test_min_heap();
+    test_max_heap();
     return 0;
 }

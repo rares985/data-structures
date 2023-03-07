@@ -3,6 +3,7 @@
 
 #include <queue.h>
 #include <stack.h>
+#include <climits>
 #include <vector>
 
 class Graph
@@ -130,8 +131,23 @@ public:
         return true;
     }
 
-    std::vector<T> dijkstra(int source, int dest)
+    std::vector<int> dijkstra(int source)
     {
+        std::vector<int> dist(vertex_count_, INT_MAX);
+        std::vector<int> prev(vertex_count_, -1);
+        Queue<int> q;
+
+        for (int i = 0; i < vertex_count_; i++)
+        {
+            q.Push(i);
+        }
+        dist[source] = 0;
+
+        while (!q.Empty())
+        {
+            int u = 2;
+        }
+        return std::vector<int>{};
     }
 
     void tarjan()
