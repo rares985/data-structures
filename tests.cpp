@@ -11,9 +11,11 @@
 #include <unique_ptr.h>
 #include <graph.h>
 #include <algorithm>
+#include <sstream>
+#include <istream>
+#include <ostream>
 
-#include <min_heap.h>
-#include <max_heap.h>
+#include <heap.h>
 
 template <typename T>
 std::string vec2String(std::vector<T> vec)
@@ -49,33 +51,67 @@ static void test_bst()
     delete tree;
 }
 
-static void test_min_heap()
+template <typename T>
+struct SmallerPriority
 {
-    MinHeap<int> *mh = new MinHeap<int>{20};
-    std::vector<int> elems{100, 90, 80, 70, 60, 50, 40, 30, 20, 10};
+    bool operator()(const T &lhs, const T &rhs)
+    {
+        return lhs.priority < rhs.priority;
+    }
+};
+
+template <typename T>
+struct LargerPriority
+{
+    bool operator()(const T &lhs, const T &rhs)
+    {
+        return lhs.priority > rhs.priority;
+    }
+};
+
+struct PriorityHolder
+{
+    int priority;
+    int data;
+
+    PriorityHolder(int p, int d) : priority(p), data(d) {}
+    PriorityHolder() : priority(-1), data(-1) {}
+
+    friend std::ostream &operator<<(std::ostream &os, const PriorityHolder &rhs)
+    {
+        os << rhs.priority << " " << rhs.data;
+        return os;
+    }
+};
+
+using PQueueMin = Heap<PriorityHolder, SmallerPriority<PriorityHolder>>;
+using PQueueMax = Heap<PriorityHolder, LargerPriority<PriorityHolder>>;
+
+static void
+test_min_heap()
+{
+    PQueueMin *mh = new PQueueMin{20};
+    std::vector<PriorityHolder> elems = {{2, 100}, {3, 500}, {1, 400}};
 
     for (auto &elem : elems)
     {
         mh->Insert(elem);
     }
-    auto it = std::min_element(elems.begin(), elems.end());
-    std::cout << "Minimum is : " << mh->Pop() << " " << *it << "\n";
+    std::cout << "Minimum is : " << mh->Pop() << "\n";
 
     delete mh;
 }
 
 static void test_max_heap()
 {
-    MaxHeap<int> *mh = new MaxHeap<int>{20};
-    std::vector<int> elems{100, 90, 80, 70, 60, 50, 40, 30, 20, 10};
+    PQueueMax *mh = new PQueueMax{20};
+    std::vector<PriorityHolder> elems = {{2, 100}, {3, 500}, {1, 400}};
 
     for (auto &elem : elems)
     {
         mh->Insert(elem);
     }
-
-    auto it = std::max_element(elems.begin(), elems.end());
-    std::cout << "Maximum is : " << mh->Pop() << " " << *it << "\n";
+    std::cout << "Maximum is : " << mh->Pop() << "\n";
 
     delete mh;
 }
@@ -111,8 +147,9 @@ static void test_graph(void)
 
 int main()
 {
-    test_bst();
+    // test_bst();
     test_min_heap();
     test_max_heap();
+
     return 0;
 }
