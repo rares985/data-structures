@@ -26,6 +26,42 @@ std::string vec2String(std::vector<T> vec)
     return ss.str();
 }
 
+static void test_sll(void)
+{
+    UniquePtr<SingleLinkedList<int>> lst{new SingleLinkedList<int>{}};
+    lst->PushBack(5);
+    lst->PushBack(6);
+    lst->PushBack(7);
+    lst->PushFront(4);
+    lst->PushFront(3);
+    lst->PushFront(2);
+    lst->PushFront(1);
+    lst->PushFront(0);
+
+    assert(lst->Size() == 8);
+
+    std::cout << *lst << "\n";
+    lst->Reverse();
+    std::cout << *lst << "\n";
+    lst->Reverse();
+    std::cout << *lst << "\n";
+
+    int ret;
+
+    for (int i = 7; i >= 0; i--)
+    {
+        ret = lst->PopBack();
+        assert(ret == i);
+    }
+
+    ret = lst->PopFront();
+    assert(ret == 0);
+
+    assert(lst->Size() == 0);
+    assert(lst->Empty() == true);
+    assert(lst->HasCycle() == false);
+}
+
 static void test_bst()
 {
     BinarySearchTree<int> *tree = new BinarySearchTree<int>{};
@@ -148,6 +184,7 @@ static void test_graph(void)
 int main()
 {
     // test_bst();
+    test_sll();
     test_min_heap();
     test_max_heap();
 

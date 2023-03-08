@@ -5,8 +5,6 @@
 #include <stack.h>
 #include <climits>
 #include <vector>
-#include <max_heap.h>
-
 class Graph
 {
 private:

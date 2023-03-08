@@ -4,7 +4,6 @@
 #include <ostream>
 #include <iostream>
 
-template <typename T>
 class SharedPtr
 {
 private:

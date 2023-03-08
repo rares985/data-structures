@@ -5,6 +5,11 @@
 #include <ostream>
 #include <iostream>
 
+class ListEmptyException : public std::exception
+{
+    const char *what() { return "List is empty!"; }
+};
+
 template <typename T>
 class SingleLinkedList
 {
@@ -15,16 +20,10 @@ private:
     Node<T> *head_;
 
 public:
-    SingleLinkedList()
-    {
-        head_ = nullptr;
-    }
-
+    SingleLinkedList() : head_{nullptr} {}
     SingleLinkedList(SingleLinkedList<T> &other) = delete;
-    SingleLinkedList(SingleLinkedList<T> &&other)
+    SingleLinkedList(SingleLinkedList<T> &&other) : head_{other.head_}
     {
-        /* Is this enough? Yes, because data is allocated on heap */
-        this->head_ = other.head_;
         other.head_ = nullptr;
     }
 
@@ -77,7 +76,7 @@ public:
         }
         else
         {
-            throw std::out_of_range("List is empty!");
+            throw ListEmptyException();
         }
     }
 
@@ -85,7 +84,7 @@ public:
     {
         if (!head_)
         {
-            throw std::out_of_range("List is empty");
+            throw ListEmptyException();
         }
 
         Node<T> *it = head_;

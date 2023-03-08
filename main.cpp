@@ -99,42 +99,6 @@ static void test_vector(void)
 //     std::cout << "QUICK SORT: " << v << "\n";
 // }
 
-static void test_sll(void)
-{
-    UniquePtr<SingleLinkedList<int>> lst{new SingleLinkedList<int>{}};
-    lst->PushBack(5);
-    lst->PushBack(6);
-    lst->PushBack(7);
-    lst->PushFront(4);
-    lst->PushFront(3);
-    lst->PushFront(2);
-    lst->PushFront(1);
-    lst->PushFront(0);
-
-    assert(lst->Size() == 8);
-
-    std::cout << *lst << "\n";
-    lst->Reverse();
-    std::cout << *lst << "\n";
-    lst->Reverse();
-    std::cout << *lst << "\n";
-
-    int ret;
-
-    for (int i = 7; i >= 0; i--)
-    {
-        ret = lst->PopBack();
-        assert(ret == i);
-    }
-
-    ret = lst->PopFront();
-    assert(ret == 0);
-
-    assert(lst->Size() == 0);
-    assert(lst->Empty() == true);
-    assert(lst->HasCycle() == false);
-}
-
 static void test_dll(void)
 {
     UniquePtr<DoubleLinkedList<int>> lst{new DoubleLinkedList<int>{}};
@@ -273,8 +237,8 @@ int main()
     // std::cout << "Vector Test ------------- OK\n";
     // test_utils();
     // std::cout << "Utils Test ------------- OK\n";
-    // test_sll();
-    // std::cout << "SLL Test ------------- OK\n";
+    test_sll();
+    std::cout << "SLL Test ------------- OK\n";
     // test_dll();
     // std::cout << "DLL Test ------------- OK\n";
     // test_stack();

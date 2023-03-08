@@ -12,23 +12,16 @@ struct DoubleLinkedListNode
     DoubleLinkedListNode *prev;
 
     DoubleLinkedListNode() = delete;
+    DoubleLinkedListNode(DoubleLinkedListNode<T> &other) = delete;
+
     DoubleLinkedListNode(T value, DoubleLinkedListNode<T> *prev_ = nullptr, DoubleLinkedListNode<T> *next_ = nullptr) : data{new T{value}}, next{next_}, prev{prev_} {}
 
     ~DoubleLinkedListNode() {}
 
-    DoubleLinkedListNode(DoubleLinkedListNode<T> &other)
+    DoubleLinkedListNode(DoubleLinkedListNode<T> &&other) : data{std::move(other.data)}, next{other.next}, prev{other.prev} {}
     {
-        this->data = other.data;
-        this->next = other.next;
-    }
-
-    DoubleLinkedListNode(DoubleLinkedListNode<T> &&other)
-    {
-        this->data = other.data;
-        other.data = nullptr;
-
-        this->next = other.next;
         other.next = nullptr;
+        other.prev = nullptr;
     }
 
     friend std::ostream &operator<<(std::ostream &out, const DoubleLinkedListNode<T> &other)

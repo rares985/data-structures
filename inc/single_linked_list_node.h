@@ -10,23 +10,14 @@ struct SingleLinkedListNode
     SingleLinkedListNode *next;
 
     SingleLinkedListNode() = delete;
+    SingleLinkedListNode(SingleLinkedListNode<T> &other) = delete;
 
     SingleLinkedListNode(T value, SingleLinkedListNode<T> *next_ = nullptr) : data{new T{value}}, next{next_} {}
 
     ~SingleLinkedListNode() {}
 
-    SingleLinkedListNode(SingleLinkedListNode<T> &other)
+    SingleLinkedListNode(SingleLinkedListNode<T> &&other) : data{std::move(other.data)}, next{other.next} {}
     {
-        this->data = other.data;
-        this->next = other.next;
-    }
-
-    SingleLinkedListNode(SingleLinkedListNode<T> &&other)
-    {
-        this->data = other.data;
-        other.data = nullptr;
-
-        this->next = other.next;
         other.next = nullptr;
     }
 

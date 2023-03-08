@@ -4,6 +4,12 @@
 #include <double_linked_list_node.h>
 #include <ostream>
 
+class ListEmptyException : public std::exception
+{
+    const char *what() { return "List is empty!"; }
+};
+
+// Node creation policy (Single or Double)
 template <typename T>
 class DoubleLinkedList
 {
@@ -14,19 +20,10 @@ private:
     Node<T> *head_;
 
 public:
-    DoubleLinkedList()
+    DoubleLinkedList() : head_{nullptr} {}
+    DoubleLinkedList(DoubleLinkedList<T> &other) = delete;
+    DoubleLinkedList(DoubleLinkedList<T> &&other) : head_{other.head}
     {
-        head_ = nullptr;
-    }
-
-    DoubleLinkedList(DoubleLinkedList<T> &other)
-    {
-        /* Should we copy? */
-    }
-
-    DoubleLinkedList(DoubleLinkedList<T> &&other)
-    {
-        this->head_ = other.head_;
         other.head_ = nullptr;
     }
 
@@ -73,11 +70,13 @@ public:
 
     T *Front()
     {
+        // TODO: Make consistent with SLL
         return (head_ ? head_->data : nullptr);
     }
 
     T *Back()
     {
+        // TODO: Make consistent with SLL
         Node<T> *it = nullptr;
         T *ret = nullptr;
 
