@@ -20,7 +20,7 @@ public:
 
     SharedPtr(SharedPtr<T> &other) : raw_{other.raw_}, counter_{other.counter_}
     {
-        (*this->counter_)++;
+        (*counter_)++;
     }
 
     SharedPtr(SharedPtr<T> &&other) : raw_{other.raw_}, counter_{other.counter_}
@@ -31,42 +31,49 @@ public:
 
     ~SharedPtr()
     {
-        if (this->raw_ == nullptr)
+        if (raw_ == nullptr)
         {
             return;
         }
-        (*this->counter_)--;
-        if (*this->counter_ == 0)
+        (*counter_)--;
+        if (*counter_ == 0)
         {
             delete raw_;
             delete counter_;
         }
     }
 
-    SharedPtr &operator=(const SharedPtr<T> &other)
+    SharedPtr<T> &operator=(const SharedPtr<T> &other)
     {
-        /* TODO */
+        raw_ = other.raw_;
+        (*counter++);
+        return *this;
     }
 
-    SharedPtr &operator=(const SharedPtr<T> &&other)
+    SharedPtr<T> &operator=(const SharedPtr<T> &&other)
     {
-        /* TODO */
+        raw_ = other.raw_;
+        counter_ = other.counter_;
+
+        other.raw_ = nullptr;
+        other.counter_ = nullptr;
     }
 
     T *operator->()
     {
-        return this->raw_;
+        return raw_;
     }
 
     T &operator*()
     {
-        return *this->raw_;
+        return *raw_;
     }
 
-    void reset(T *raw_)
+    void reset(T *raw)
     {
-        delete this->raw_;
-        *(this->counter_) = 0;
+        delete raw_;
+        raw_ = raw;
+        *counter_ = 1;
     }
 };
 

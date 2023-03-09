@@ -11,32 +11,40 @@ public:
     UniquePtr() = delete;
     UniquePtr(UniquePtr<T> &other) = delete;
 
-    UniquePtr(UniquePtr<T> &&other)
+    UniquePtr(UniquePtr<T> &&other) : raw_{other.raw}
     {
-        this->raw_ = other.raw_;
+        other.raw_ = nullptr;
+    }
+
+    UniquePtr<T> &operator=(UniquePtr<T> &other) = delete;
+    UniquePtr<T> &operator=(const UniquePtr<T> &other) = delete;
+
+    UniquePtr<T> &operator=(const UniquePtr<T> &&other)
+    {
+        raw_ = other.raw_;
         other.raw_ = nullptr;
     }
 
     UniquePtr(T *raw) : raw_(raw) {}
     ~UniquePtr()
     {
-        delete this->raw_;
+        delete raw_;
     }
 
     T *operator->()
     {
-        return this->raw_;
+        return raw_;
     }
 
     T &operator*()
     {
-        return *this->raw_;
+        return *raw_;
     }
 
-    void reset(T *raw_)
+    void reset(T *raw)
     {
-        delete this->raw_;
-        this->raw_ = raw_;
+        delete raw_;
+        raw_ = raw;
     }
 };
 
