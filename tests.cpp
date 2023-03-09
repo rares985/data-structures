@@ -14,7 +14,9 @@
 #include <istream>
 #include <ostream>
 #include "unique_ptr_test.h"
+
 #include "stack.h"
+#include "queue.h"
 
 #include <heap.h>
 
@@ -204,24 +206,64 @@ static void test_max_heap()
 //     std::cout << "DFS Traversal: " << vec2String(traversal) << "\n";
 // }
 
+template <typename T>
+using LinkedListStack = Stack::Stack<T, Stack::LinkedListStoragePolicy>;
+template <typename T>
+using ArrayStack = Stack::Stack<T, Stack::ArrayStoragePolicy>;
+template <typename T>
+using LinkedListQueue = Queue::Queue<T, Queue::LinkedListStoragePolicy>;
+template <typename T>
+using ArrayQueue = Queue::Queue<T, Queue::ArrayStoragePolicy>;
+
 static void TestStack()
 {
-    Stack<int, LinkedListStoragePolicy> s;
+    std::cout << "========= TEST STACK =========\n";
+    LinkedListStack<int> s;
 
     s.Push(3);
     s.Push(5);
 
     std::cout << s.Print();
 
-    Stack<int, ArrayStoragePolicy> s2;
+    ArrayStack<int> s2;
     s2.Push(3);
     s2.Push(5);
 
-    std::cout << s2.Print();
+    std::cout << s2.Print() << "\n";
+}
+
+static void TestQueue()
+{
+    std::cout << "========= TEST QUEUE  =========\n";
+    LinkedListQueue<int> q;
+    q.Push(3);
+    q.Push(2);
+    q.Push(1);
+
+    std::cout << q.Print() << "\n";
+
+    std::cout << "SIZE: " << q.Size() << "\n";
+    std::cout << q.Pop() << "\n";
+    std::cout << "SIZE: " << q.Size() << "\n";
+}
+
+static void TestSingleLinkedList()
+{
+    std::cout << "========= TEST SINGLE LINKED LIST  =========\n";
+    UniquePtr<SingleLinkedList<int>> ll = new SingleLinkedList<int>{};
+
+    ll->PushBack(3);
+    std::cout << "Size = " << ll->Size() << "\n";
+    ll->PushBack(2);
+    std::cout << "Size = " << ll->Size() << "\n";
+    ll->PushBack(1);
+    std::cout << "Size = " << ll->Size() << "\n";
 }
 int main()
 {
     TestStack();
+    TestQueue();
+    TestSingleLinkedList();
 
     return 0;
 }

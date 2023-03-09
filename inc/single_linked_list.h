@@ -138,7 +138,7 @@ public:
     {
         bool ret = true;
 
-        Node<T> *elem = new Node<T>{value};
+        Node<T> *elem = new Node<T>{value, nullptr};
         if (head_ == nullptr)
         {
             head_ = elem;
@@ -147,7 +147,6 @@ public:
         {
             Node<T> *tail = GetTail();
             tail->next = elem;
-            elem->next = nullptr;
         }
 
         return ret;
