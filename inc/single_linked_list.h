@@ -69,12 +69,12 @@ public:
         head_ = nullptr;
     }
 
-    bool Empty()
+    bool Empty() const
     {
         return (head_ == nullptr);
     }
 
-    int Size()
+    int Size() const
     {
         int size = 0;
         Node<T> *it = head_;
@@ -118,9 +118,9 @@ public:
 
     T PopFront()
     {
-        if (Empty())
+        if (!head_)
         {
-            return 0;
+            throw ListEmptyException();
         }
 
         Node<T> *temp = head_;
@@ -159,9 +159,9 @@ public:
         Node<T> *prev = nullptr;
         T ret = 0;
 
-        if (Empty())
+        if (!head_)
         {
-            return 0;
+            throw ListEmptyException();
         }
 
         it = head_;
@@ -205,7 +205,7 @@ public:
         head_ = prev;
     }
 
-    bool HasCycle()
+    bool HasCycle() const
     {
         if (!head_ || !head_->next)
         {

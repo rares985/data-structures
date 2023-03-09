@@ -11,7 +11,7 @@ public:
     UniquePtr() = delete;
     UniquePtr(UniquePtr<T> &other) = delete;
 
-    UniquePtr(UniquePtr<T> &&other) : raw_{other.raw}
+    UniquePtr(UniquePtr<T> &&other) : raw_{other.raw_}
     {
         other.raw_ = nullptr;
     }
@@ -31,12 +31,12 @@ public:
         delete raw_;
     }
 
-    T *operator->()
+    T *operator->() const
     {
         return raw_;
     }
 
-    T &operator*()
+    T &operator*() const
     {
         return *raw_;
     }

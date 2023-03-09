@@ -8,12 +8,13 @@
 #include <binary_search_tree.h>
 #include <unique_ptr.h>
 #include <single_linked_list.h>
-#include <graph.h>
+// #include <graph.h>
 #include <algorithm>
 #include <sstream>
 #include <istream>
 #include <ostream>
 #include "unique_ptr_test.h"
+#include "stack.h"
 
 #include <heap.h>
 
@@ -203,9 +204,24 @@ static void test_max_heap()
 //     std::cout << "DFS Traversal: " << vec2String(traversal) << "\n";
 // }
 
+static void TestStack()
+{
+    Stack<int, LinkedListStoragePolicy> s;
+
+    s.Push(3);
+    s.Push(5);
+
+    std::cout << s.Print();
+
+    Stack<int, ArrayStoragePolicy> s2;
+    s2.Push(3);
+    s2.Push(5);
+
+    std::cout << s2.Print();
+}
 int main()
 {
-    UniquePtrTest::TestAll();
+    TestStack();
 
     return 0;
 }
