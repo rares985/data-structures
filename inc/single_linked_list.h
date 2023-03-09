@@ -19,6 +19,16 @@ private:
 
     Node<T> *head_;
 
+    Node<T> *GetTail()
+    {
+        Node<T> *it = head_;
+        while (it->next != nullptr)
+        {
+            it = it->next;
+        }
+        return it;
+    }
+
 public:
     SingleLinkedList() : head_{nullptr} {}
     SingleLinkedList(SingleLinkedList<T> &other) = delete;
@@ -68,32 +78,15 @@ public:
         return size;
     }
 
-    T Front()
+    T *Front()
     {
-        if (head_)
-        {
-            return *head_->data;
-        }
-        else
-        {
-            throw ListEmptyException();
-        }
+        return (head_ ? head_->data : nullptr);
     }
 
-    T Back()
+    T *Back()
     {
-        if (!head_)
-        {
-            throw ListEmptyException();
-        }
-
-        Node<T> *it = head_;
-        while (it->next != nullptr)
-        {
-            it = it->next;
-        }
-
-        return *(it->data);
+        Node<T> *tail = GetTail();
+        return *(tail->data);
     }
 
     bool PushFront(T value)
@@ -136,13 +129,8 @@ public:
             }
             else
             {
-                Node<T> *it = head_;
-                while (it->next != nullptr)
-                {
-                    it = it->next;
-                }
-
-                it->next = elem;
+                Node<T> *tail = GetTail();
+                tail->next = elem;
                 elem->next = nullptr;
             }
         }

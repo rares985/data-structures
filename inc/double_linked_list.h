@@ -19,6 +19,16 @@ class DoubleLinkedList
 private:
     Node<T> *head_;
 
+    Node<T> *GetTail()
+    {
+        Node<T> *it = head_;
+        while (it->next != nullptr)
+        {
+            it = it->next;
+        }
+        return it;
+    }
+
 public:
     DoubleLinkedList() : head_{nullptr} {}
     DoubleLinkedList(DoubleLinkedList<T> &other) = delete;
@@ -70,31 +80,21 @@ public:
 
     T *Front()
     {
-        // TODO: Make consistent with SLL
         return (head_ ? head_->data : nullptr);
     }
 
     T *Back()
     {
-        // TODO: Make consistent with SLL
-        Node<T> *it = nullptr;
-        T *ret = nullptr;
 
-        it = head_;
-        while (it != nullptr)
-        {
-            ret = it->data;
-            it = it->next;
-        }
+        Node<T> *it = GetTail();
 
-        return ret;
+        return *(it->data);
     }
 
     bool PushFront(T value)
     {
         Node<T> *elem = new Node<T>{value, nullptr, head_};
 
-        elem->next = head_;
         head_->prev = elem;
 
         head_ = elem;
@@ -138,6 +138,7 @@ public:
                 it = it->next;
             }
 
+            elem = new Node<T>{value, it, nullptr};
             it->next = elem;
             elem->prev = it;
             elem->next = nullptr;
