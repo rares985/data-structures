@@ -132,16 +132,9 @@ public:
         }
         else
         {
-            Node<T> *it = head_;
-            while (it->next != nullptr)
-            {
-                it = it->next;
-            }
-
-            elem = new Node<T>{value, it, nullptr};
+            Node<T> *tail = GetTail();
+            elem = new Node<T>{value, tail, nullptr};
             it->next = elem;
-            elem->prev = it;
-            elem->next = nullptr;
         }
 
         return ret;

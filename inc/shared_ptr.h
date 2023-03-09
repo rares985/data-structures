@@ -4,6 +4,7 @@
 #include <ostream>
 #include <iostream>
 
+template <typename T>
 class SharedPtr
 {
 private:
@@ -17,12 +18,12 @@ public:
     {
     }
 
-    SharedPtr(SharedPtr &other) : raw_{other.raw_}, counter_{other.counter_}
+    SharedPtr(SharedPtr<T> &other) : raw_{other.raw_}, counter_{other.counter_}
     {
         (*this->counter_)++;
     }
 
-    SharedPtr(SharedPtr &&other) : raw_{other.raw_}, counter_{other.counter_}
+    SharedPtr(SharedPtr<T> &&other) : raw_{other.raw_}, counter_{other.counter_}
     {
         other.raw_ = nullptr;
         other.counter_ = nullptr;
@@ -42,12 +43,12 @@ public:
         }
     }
 
-    SharedPtr &operator=(const SharedPtr &other)
+    SharedPtr &operator=(const SharedPtr<T> &other)
     {
         /* TODO */
     }
 
-    SharedPtr &operator=(const SharedPtr &&other)
+    SharedPtr &operator=(const SharedPtr<T> &&other)
     {
         /* TODO */
     }

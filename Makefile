@@ -8,6 +8,7 @@ EXE=tests
 EXE_CPP=$(EXE).cpp
 OBJ_DIR=obj/
 SRC_DIR = src/
+UT_DIR := gtest
 
 
 SRC = $(shell find $(SRC_DIR) -name '*.cpp' -printf "%f ")
@@ -23,6 +24,12 @@ $(EXE): $(EXE_CPP) $(OBJ)
 $(OBJ): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(info Building objects...)
 	$(CXX) $(INCLUDES) $(CXXFLAGS) -o $@ -c $<
+
+test:
+	$(MAKE) -C $(UT_DIR) $@
+
+testclean:
+	$(MAKE) -C $(UT_DIR) $@
 
 
 

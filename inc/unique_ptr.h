@@ -9,9 +9,9 @@ private:
 
 public:
     UniquePtr() = delete;
-    UniquePtr(UniquePtr &other) = delete;
+    UniquePtr(UniquePtr<T> &other) = delete;
 
-    UniquePtr(UniquePtr &&other)
+    UniquePtr(UniquePtr<T> &&other)
     {
         this->raw_ = other.raw_;
         other.raw_ = nullptr;

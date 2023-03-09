@@ -3,6 +3,7 @@
 
 #include <ostream>
 #include <unique_ptr.h>
+
 template <typename T>
 struct SingleLinkedListNode
 {
@@ -16,7 +17,7 @@ struct SingleLinkedListNode
 
     ~SingleLinkedListNode() {}
 
-    SingleLinkedListNode(SingleLinkedListNode<T> &&other) : data{std::move(other.data)}, next{other.next} {}
+    SingleLinkedListNode(SingleLinkedListNode<T> &&other) : data{std::move(other.data)}, next{other.next}
     {
         other.next = nullptr;
     }

@@ -32,6 +32,16 @@ private:
 public:
     SingleLinkedList() : head_{nullptr} {}
     SingleLinkedList(SingleLinkedList<T> &other) = delete;
+    SingleLinkedList<T> &operator=(SingleLinkedList<T> &other) = delete;
+
+    SingleLinkedList<T> &operator=(SingleLinkedList<T> &&other)
+    {
+        head_ = other.head_;
+        other.head_ = nullptr;
+
+        return *this;
+    }
+
     SingleLinkedList(SingleLinkedList<T> &&other) : head_{other.head_}
     {
         other.head_ = nullptr;
@@ -78,13 +88,22 @@ public:
         return size;
     }
 
-    T *Front()
+    T &Front()
     {
-        return (head_ ? head_->data : nullptr);
+        if (!head_)
+        {
+            throw ListEmptyException();
+        }
+        return *(head_->data);
     }
 
-    T *Back()
+    T &Back()
     {
+        if (!head_)
+        {
+            throw ListEmptyException();
+        }
+
         Node<T> *tail = GetTail();
         return *(tail->data);
     }
@@ -99,7 +118,6 @@ public:
 
     T PopFront()
     {
-
         if (Empty())
         {
             return 0;
@@ -118,21 +136,18 @@ public:
 
     bool PushBack(T value)
     {
-        bool ret = false;
+        bool ret = true;
 
         Node<T> *elem = new Node<T>{value};
-        if (elem)
+        if (head_ == nullptr)
         {
-            if (head_ == nullptr)
-            {
-                head_ = elem;
-            }
-            else
-            {
-                Node<T> *tail = GetTail();
-                tail->next = elem;
-                elem->next = nullptr;
-            }
+            head_ = elem;
+        }
+        else
+        {
+            Node<T> *tail = GetTail();
+            tail->next = elem;
+            elem->next = nullptr;
         }
 
         return ret;

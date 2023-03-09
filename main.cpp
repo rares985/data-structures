@@ -6,7 +6,6 @@
 #include <vector.h>
 // #include <sort.h>
 
-#include <binary_tree.h>
 #include <binary_search_tree.h>
 
 #include <unique_ptr.h>

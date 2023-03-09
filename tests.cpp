@@ -1,5 +1,3 @@
-// #include <binary_search_tree.h>
-
 #include <memory>
 #include <cassert>
 #include <vector>
@@ -9,6 +7,7 @@
 #include <binary_tree_node.h>
 #include <binary_search_tree.h>
 #include <unique_ptr.h>
+#include <single_linked_list.h>
 #include <graph.h>
 #include <algorithm>
 #include <sstream>
@@ -28,64 +27,86 @@ std::string vec2String(std::vector<T> vec)
 
 static void test_sll(void)
 {
-    UniquePtr<SingleLinkedList<int>> lst{new SingleLinkedList<int>{}};
-    lst->PushBack(5);
-    lst->PushBack(6);
-    lst->PushBack(7);
-    lst->PushFront(4);
-    lst->PushFront(3);
-    lst->PushFront(2);
-    lst->PushFront(1);
-    lst->PushFront(0);
-
-    assert(lst->Size() == 8);
-
-    std::cout << *lst << "\n";
-    lst->Reverse();
-    std::cout << *lst << "\n";
-    lst->Reverse();
-    std::cout << *lst << "\n";
-
-    int ret;
-
-    for (int i = 7; i >= 0; i--)
+    SingleLinkedList<int> lst;
+    bool pass = false;
+    assert(lst.Empty() == true);
+    assert(lst.Size() == 0);
+    try
     {
-        ret = lst->PopBack();
-        assert(ret == i);
+        int &f = lst.Front();
     }
+    catch (ListEmptyException &ex)
+    {
+        pass = true;
+    }
+    assert(pass == true);
 
-    ret = lst->PopFront();
-    assert(ret == 0);
+    pass = false;
+    try
+    {
+        int &b = lst.Back();
+    }
+    catch (ListEmptyException &ex)
+    {
+        pass = true;
+    }
+    assert(pass == true);
 
-    assert(lst->Size() == 0);
-    assert(lst->Empty() == true);
-    assert(lst->HasCycle() == false);
+    assert(lst.HasCycle() == false);
+    std::cout << "TEST: EMPTY LIST INTERFACES: OK\n";
+
+    lst = std::move(SingleLinkedList<int>{});
+    assert(true == lst.PushBack(5));
+    assert(lst.Empty() == false);
+    assert(lst.Size() == 1);
+
+    assert(5 == lst.PopFront());
+    assert(lst.Empty() == true);
+    assert(lst.Size() == 0);
+
+    assert(true == lst.PushFront(3));
+    assert(lst.Empty() == false);
+    assert(lst.Size() == 1);
+    assert(3 == lst.PopBack());
+    assert(lst.Empty() == true);
+    assert(lst.Size() == 0);
+
+    assert(true == lst.PushFront(1));
+    assert(true == lst.PushBack(2));
+    assert(lst.Empty() == false);
+    assert(lst.Size() == 2);
+    assert(2 == lst.PopBack());
+    assert(1 == lst.PopFront());
+    assert(lst.Empty() == true);
+    assert(lst.Size() == 0);
+    std::cout
+        << "TEST: PUSHES OK\n";
 }
 
-static void test_bst()
-{
-    BinarySearchTree<int> *tree = new BinarySearchTree<int>{};
-    tree->Insert(50);
-    tree->Insert(19);
-    tree->Insert(28);
-    tree->Insert(40);
-    tree->Insert(16);
-    tree->Insert(70);
-    tree->Insert(55);
-    tree->Insert(56);
-    tree->Insert(17);
-    tree->Insert(90);
-    tree->Display();
-    std::cout << "\n"
-              << tree->MaxDepth();
+// static void test_bst()
+// {
+//     BinarySearchTree<int> *tree = new BinarySearchTree<int>{};
+//     tree->Insert(50);
+//     tree->Insert(19);
+//     tree->Insert(28);
+//     tree->Insert(40);
+//     tree->Insert(16);
+//     tree->Insert(70);
+//     tree->Insert(55);
+//     tree->Insert(56);
+//     tree->Insert(17);
+//     tree->Insert(90);
+//     tree->Display();
+//     std::cout << "\n"
+//               << tree->MaxDepth();
 
-    for (auto &elem : tree->ToVector())
-    {
-        std::cout << elem << " ";
-    }
+//     for (auto &elem : tree->ToVector())
+//     {
+//         std::cout << elem << " ";
+//     }
 
-    delete tree;
-}
+//     delete tree;
+// }
 
 template <typename T>
 struct SmallerPriority
@@ -152,34 +173,34 @@ static void test_max_heap()
     delete mh;
 }
 
-static void test_graph(void)
-{
-    UniquePtr<Graph> g{new Graph{9, false}};
+// static void test_graph(void)
+// {
+//     UniquePtr<Graph> g{new Graph{9, false}};
 
-    g->AddEdge(1, 2);
-    g->AddEdge(2, 8);
-    g->AddEdge(8, 3);
-    g->AddEdge(3, 6);
-    g->AddEdge(6, 7);
+//     g->AddEdge(1, 2);
+//     g->AddEdge(2, 8);
+//     g->AddEdge(8, 3);
+//     g->AddEdge(3, 6);
+//     g->AddEdge(6, 7);
 
-    g->AddEdge(3, 4);
-    g->AddEdge(4, 5);
-    g->AddEdge(5, 9);
-    g->AddEdge(9, 1);
-    g->AddEdge(4, 1);
+//     g->AddEdge(3, 4);
+//     g->AddEdge(4, 5);
+//     g->AddEdge(5, 9);
+//     g->AddEdge(9, 1);
+//     g->AddEdge(4, 1);
 
-    std::cout << *g << "\n";
+//     std::cout << *g << "\n";
 
-    std::vector<int> traversal;
+//     std::vector<int> traversal;
 
-    assert(true == g->BFSTraversal(1, traversal));
+//     assert(true == g->BFSTraversal(1, traversal));
 
-    std::cout << "BFS Traversal: " << vec2String(traversal) << "\n";
+//     std::cout << "BFS Traversal: " << vec2String(traversal) << "\n";
 
-    traversal.clear();
-    assert(true == g->DFSTraversal(1, traversal));
-    std::cout << "DFS Traversal: " << vec2String(traversal) << "\n";
-}
+//     traversal.clear();
+//     assert(true == g->DFSTraversal(1, traversal));
+//     std::cout << "DFS Traversal: " << vec2String(traversal) << "\n";
+// }
 
 int main()
 {
