@@ -13,6 +13,7 @@
 #include <sstream>
 #include <istream>
 #include <ostream>
+#include "unique_ptr_test.h"
 
 #include <heap.h>
 
@@ -204,10 +205,7 @@ static void test_max_heap()
 
 int main()
 {
-    // test_bst();
-    test_sll();
-    test_min_heap();
-    test_max_heap();
+    UniquePtrTest::TestAll();
 
     return 0;
 }

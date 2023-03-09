@@ -25,8 +25,9 @@ $(OBJ): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(info Building objects...)
 	$(CXX) $(INCLUDES) $(CXXFLAGS) -o $@ -c $<
 
-test:
+test: $(TEST_CPP) $(OBJ) $(TEST_OBJ)
 	$(MAKE) -C $(UT_DIR) $@
+
 
 testclean:
 	$(MAKE) -C $(UT_DIR) $@
