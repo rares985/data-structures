@@ -12,7 +12,7 @@ namespace Queue
     {
         bool Empty() const { return size_ == 0; }
 
-        bool Size() const { return size_; }
+        int Size() const { return size_; }
 
         int Capacity() const { return capacity_; }
 
@@ -59,7 +59,7 @@ namespace Queue
     struct LinkedListStoragePolicy
     {
         bool Empty() const { return lst_->Empty(); }
-        bool Size() const { return lst_->Size(); }
+        int Size() const { return lst_->Size(); }
         int Capacity() const { return capacity_; }
         T Front() const { return lst_->Front(); }
         T Back() const { return lst_->Back(); }

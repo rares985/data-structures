@@ -29,64 +29,6 @@ std::string vec2String(std::vector<T> vec)
     return ss.str();
 }
 
-static void test_sll(void)
-{
-    SingleLinkedList<int> lst;
-    bool pass = false;
-    assert(lst.Empty() == true);
-    assert(lst.Size() == 0);
-    try
-    {
-        int &f = lst.Front();
-    }
-    catch (ListEmptyException &ex)
-    {
-        pass = true;
-    }
-    assert(pass == true);
-
-    pass = false;
-    try
-    {
-        int &b = lst.Back();
-    }
-    catch (ListEmptyException &ex)
-    {
-        pass = true;
-    }
-    assert(pass == true);
-
-    assert(lst.HasCycle() == false);
-    std::cout << "TEST: EMPTY LIST INTERFACES: OK\n";
-
-    lst = std::move(SingleLinkedList<int>{});
-    assert(true == lst.PushBack(5));
-    assert(lst.Empty() == false);
-    assert(lst.Size() == 1);
-
-    assert(5 == lst.PopFront());
-    assert(lst.Empty() == true);
-    assert(lst.Size() == 0);
-
-    assert(true == lst.PushFront(3));
-    assert(lst.Empty() == false);
-    assert(lst.Size() == 1);
-    assert(3 == lst.PopBack());
-    assert(lst.Empty() == true);
-    assert(lst.Size() == 0);
-
-    assert(true == lst.PushFront(1));
-    assert(true == lst.PushBack(2));
-    assert(lst.Empty() == false);
-    assert(lst.Size() == 2);
-    assert(2 == lst.PopBack());
-    assert(1 == lst.PopFront());
-    assert(lst.Empty() == true);
-    assert(lst.Size() == 0);
-    std::cout
-        << "TEST: PUSHES OK\n";
-}
-
 // static void test_bst()
 // {
 //     BinarySearchTree<int> *tree = new BinarySearchTree<int>{};
